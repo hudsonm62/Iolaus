@@ -14,9 +14,9 @@ import net.minecraft.text.Text
  */
 abstract class AbstractDisplayWidget : DisplayWidget {
     companion object {
-        private const val ICON_SIZE = 32
-        private const val ROW_HEIGHT = 42
-        private const val TEXT_OFFSET = ICON_SIZE + 16
+        const val ICON_SIZE = 32
+        const val ROW_HEIGHT = 42
+        const val TEXT_OFFSET = ICON_SIZE + 16
     }
 
     protected val font: TextRenderer
@@ -30,7 +30,7 @@ abstract class AbstractDisplayWidget : DisplayWidget {
     protected abstract val titleColor: Int
     protected abstract val descriptionColor: Int
 
-    protected fun textX(x: Int) = x + TEXT_OFFSET
+    fun textX(x: Int) = x + TEXT_OFFSET
 
     override fun getHeight(width: Int) = ROW_HEIGHT
 
