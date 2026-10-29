@@ -29,10 +29,12 @@ boilerplate code for serialization of your properties with Heracles.
 ```kotlin
 package your.cool.mod.tasks
 
-import com.ziroau.iolaus.api.tasks.CountedQuestTask
 import com.mojang.serialization.Codec
-import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import com.ziroau.iolaus.api.data.QuestElementDisplay
+import com.ziroau.iolaus.api.registry.QuestTypesFactory
+import com.ziroau.iolaus.api.tasks.CountedQuestTask
+import com.ziroau.iolaus.samples.data.MyCoolInputData
 import earth.terrarium.heracles.api.tasks.QuestTaskType
 import net.minecraft.util.Identifier
 
@@ -49,31 +51,30 @@ class MyCoolTask(
     }
 
     // Necessary `QuestTaskType` Boilerplate below
+    override fun type(): QuestTaskType<MyCoolTask> = TYPE
     companion object {
         @JvmField
-        val TYPE: QuestTaskType<MyCoolTask> = Type()
-    }
-    override fun type(): QuestTaskType<MyCoolTask> = TYPE
-    private class Type : QuestTaskType<MyCoolTask> {
-        override fun id(): Identifier = Identifier.of(MOD_ID, "mycooltask_id")
+        val TYPE: QuestTaskType<MyCoolTask> =
+            QuestTypesFactory.task(
+                Identifier.of("samplemod", "mycooltask_id")
+            ) { id ->
+                RecordCodecBuilder.mapCodec { instance ->
+                    instance.group(
+                        RecordCodecBuilder.point<MyCoolTask, String>(id),
 
-        override fun codec(id: String): MapCodec<MyCoolTask> =
-            RecordCodecBuilder.mapCodec { instance ->
-                instance.group(
-                    RecordCodecBuilder.point<MyCoolTask, String>(id),
+                        QuestElementDisplay.CODEC
+                            .forGetter(MyCoolTask::display),
 
-                    QuestElementDisplay.CODEC
-                        .forGetter(MyCoolTask::display),
+                        Codec.STRING
+                            .optionalFieldOf("someConfigProperty", "")
+                            .forGetter(MyCoolTask::someConfigProperty),
 
-                    Codec.STRING
-                        .optionalFieldOf("someConfigProperty", "")
-                        .forGetter(MyCoolTask::someConfigProperty),
+                        Codec.INT
+                            .optionalFieldOf("amount", 1)
+                            .forGetter(MyCoolTask::amount)
 
-                    Codec.INT
-                        .optionalFieldOf("amount", 1)
-                        .forGetter(MyCoolTask::amount),
-
-                ).apply(instance, ::MyCoolTask)
+                    ).apply(instance, ::MyCoolTask)
+                }
             }
     }
 }
@@ -83,6 +84,9 @@ class MyCoolTask(
 
     See implementation of [`CountedQuestTask`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/tasks/CountedQuestTask.kt)
     if you want to understand how to handle storage & progress tracking, for overriding the `test` method for custom logic.
+
+There are of course other tasks you could implement/extend - I would recommend looking at the source code for
+[Iolaus](https://github.com/hudsonm62/Iolaus) & [Heracles](https://github.com/terrarium-earth/Heracles) to see what other tasks are available, and how they are implemented.
 
 ### Feeding Input Data to Tasks
 
@@ -132,11 +136,11 @@ For rewards, override the `reward` method to define the behaviour when the rewar
 ```kotlin
 package your.cool.mod.rewards
 
-import com.ziroau.iolaus.api.rewards.BaseQuestReward
-import com.ziroau.iolaus.api.data.QuestElementDisplay
 import com.mojang.serialization.Codec
-import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import com.ziroau.iolaus.api.data.QuestElementDisplay
+import com.ziroau.iolaus.api.registry.QuestTypesFactory
+import com.ziroau.iolaus.api.rewards.BaseQuestReward
 import earth.terrarium.heracles.api.rewards.QuestRewardType
 import net.minecraft.item.ItemStack
 import net.minecraft.server.network.ServerPlayerEntity
@@ -150,34 +154,33 @@ class MyCoolReward(
 ) : BaseQuestReward<MyCoolReward> {
     // `reward()` defines the behaviour when the reward is granted
     override fun reward(player: ServerPlayerEntity): Stream<ItemStack?> {
-        LOGGER.info("Reward '$rewardId' with value $someConfigProperty has been granted :)")
+        println("Reward '$rewardId' with value '$someConfigProperty' has been granted :)")
 
         // Heracles expects a stream, despite the reward not necessarily producing items
         return Stream.empty()
     }
 
-    // Necessary `QuestRewardType` Boilerplate below
+    // Necessary `QuestRewardType` Boilerplate
+    override fun type(): QuestRewardType<MyCoolReward> = TYPE
     companion object {
         @JvmField
-        val TYPE: QuestRewardType<MyCoolReward> = Type()
-    }
-    override fun type(): QuestRewardType<MyCoolReward> = TYPE
-    private class Type : QuestRewardType<MyCoolReward> {
-        override fun id(): Identifier = Identifier.of(MOD_ID, "mycoolreward_id")
+        val TYPE: QuestRewardType<MyCoolReward> =
+            QuestTypesFactory.reward(
+                Identifier.of("samplemod", "mycoolreward_id")
+            ) { id ->
+                RecordCodecBuilder.mapCodec { instance ->
+                    instance.group(
+                        RecordCodecBuilder.point<MyCoolReward, String>(id),
 
-        override fun codec(id: String): MapCodec<MyCoolReward> =
-            RecordCodecBuilder.mapCodec { instance ->
-                instance.group(
-                    RecordCodecBuilder.point<MyCoolReward, String>(id),
+                        QuestElementDisplay.CODEC
+                            .forGetter(MyCoolReward::display),
 
-                    QuestElementDisplay.CODEC
-                        .forGetter(MyCoolReward::display),
+                        Codec.STRING
+                            .optionalFieldOf("someConfigProperty", "")
+                            .forGetter(MyCoolReward::someConfigProperty)
 
-                    Codec.STRING
-                        .optionalFieldOf("someConfigProperty", "")
-                        .forGetter(MyCoolReward::someConfigProperty),
-
-                ).apply(instance, ::MyCoolReward)
+                    ).apply(instance, ::MyCoolReward)
+                }
             }
     }
 }

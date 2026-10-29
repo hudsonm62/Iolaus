@@ -8,6 +8,8 @@ import earth.terrarium.heracles.api.rewards.QuestReward
  * Implements [CustomizableQuestElementExtended], so you don't need to implement that interface separately for your reward.
  *
  * @param T The type of the extended quest reward, which must extend [BaseQuestReward].
+ *
+ * @sample com.ziroau.iolaus.samples.rewards.MyCoolReward
  */
 interface BaseQuestReward<T : BaseQuestReward<T>> : QuestReward<T>, CustomizableQuestElementExtended {
     val rewardId: String

@@ -11,6 +11,8 @@ import net.minecraft.nbt.AbstractNbtNumber
  *
  * @param I The type of input this task processes (e.g., an event or action)
  * @param T This type of the subclass of task itself, extending [QuestTask]
+ *
+ * @sample com.ziroau.iolaus.samples.tasks.MyCoolTask
  */
 interface CountedQuestTask<I, T : CountedQuestTask<I, T>> : BaseQuestTask<I, AbstractNbtNumber, T>  {
     val amount: Int
