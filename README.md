@@ -18,7 +18,7 @@ repositories {
     maven("https://maven.ziroau.com")
 }
 dependencies {
-    modImplementation "com.ziroau.iolaus:iolaus:${iolaus_version}+fabric"
+    modImplementation "com.ziroau.iolaus:${iolaus_version}+fabric"
 }
 ```
 
