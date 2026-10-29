@@ -1,0 +1,36 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[5.3,)"
+issueTrackerURL = "https://github.com/hudsonm62/Iolaus/issues"
+license = "Apache-2.0"
+
+[[mods]]
+modId = "iolaus"
+version = "${version}"
+displayName = "Iolaus"
+authors = "Hudson M."
+description = '''
+Named after the nephew, squire and charioteer of Heracles,
+Iolaus is a library mod that provides a number of useful things for extending Heracles (aka Odyssey Quests) in your own mods.
+'''
+logoFile = "assets/iolaus/icon.png"
+
+[[dependencies.iolaus]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.iolaus]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.iolaus]]
+modId = "heracles"
+type = "required"
+versionRange = "[2.0.0,)"
+ordering = "AFTER"
+side = "BOTH"

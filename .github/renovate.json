@@ -1,0 +1,22 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": ["config:recommended"],
+    "dependencyDashboard": false,
+    "addLabels": ["dependencies"],
+    "baseBranchPatterns": ["dev"],
+    "commitMessagePrefix": "📦 ",
+    "reviewers": ["hudsonm62"],
+    "ignoreDeps": ["net.minecraft:minecraft"],
+    "packageRules": [
+        {
+            "description": "Only allow Fabric API releases for Minecraft 1.21.1",
+            "matchPackageNames": ["net.fabricmc.fabric-api:fabric-api"],
+            "allowedVersions": "/\\+1\\.21\\.1$/"
+        },
+        {
+            "description": "Only allow Yarn mappings for Minecraft 1.21.1",
+            "matchPackageNames": ["net.fabricmc:yarn"],
+            "allowedVersions": "/^1\\.21\\.1\\+build\\.\\d+$/"
+        }
+    ]
+}

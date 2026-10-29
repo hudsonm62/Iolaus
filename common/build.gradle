@@ -1,0 +1,16 @@
+architectury {
+    common rootProject.enabled_platforms.split(',')
+}
+
+dependencies {
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+
+    // Common for API Access
+    modCompileOnlyApi ("earth.terrarium.heracles:heracles-fabric-1.21.1:${heracles_version}"){ transitive = false }
+    modCompileOnlyApi ("com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21:${resourcefullib_version}")
+    modCompileOnlyApi ("earth.terrarium.hermes:hermes-fabric-1.21.1:${hermes_version}"){ transitive = false }
+    modCompileOnlyApi ("earth.terrarium.olympus:olympus-fabric-1.21:${olympus_version}")
+}

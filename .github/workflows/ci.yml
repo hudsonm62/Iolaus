@@ -1,0 +1,75 @@
+name: 🧪 CI Flow
+
+on:
+  push:
+    paths: # only run on relevant changes
+      - ".github/workflows/ci.yml"
+      - "common/**"
+      - "fabric/**"
+      - "neoforge/**"
+      - "gradle/**"
+      - "gradlew"
+      - "gradlew.bat"
+      - "**/settings.gradle"
+      - "**/build.gradle"
+      - "**/gradle.properties"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: ⚙️ Checkout code
+        uses: actions/checkout@v7
+
+      - name: ⚙️ Setup JDK
+        uses: actions/setup-java@v6
+        with:
+          java-version: 25
+          distribution: temurin
+
+      - name: ⚙️ Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-read-only: false
+          gradle-version: wrapper
+          add-job-summary: "on-failure"
+
+      - name: ⚙️ Make Scripts Executable
+        shell: bash
+        run: chmod +x ./gradlew
+
+      - name: 🧪 Run Build
+        shell: bash
+        run: ./gradlew build
+
+      - name: 🩹 Get Short SHA
+        id: short-sha
+        uses: hudsonm62/short-sha@v1
+
+      - name: 🔍 Get Mod Version
+        id: get-version
+        shell: pwsh
+        run: |
+          $Version = (Get-Content gradle.properties | Select-String '^mod_version =').ToString().Split('=')[1].Trim()
+          echo "version=$Version" >> $env:GITHUB_OUTPUT
+
+      - name: 📦 Upload Fabric Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.get-version.outputs.version }}-${{ github.run_id }}.${{ github.run_attempt }}.${{ steps.short-sha.outputs.sha }}+fabric
+          path: fabric/build/libs/*.jar
+          retention-days: 3
+          include-hidden-files: true
+          if-no-files-found: error
+
+      - name: 📦 Upload NeoForge Artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ steps.get-version.outputs.version }}-${{ github.run_id }}.${{ github.run_attempt }}.${{ steps.short-sha.outputs.sha }}+neoforge
+          path: neoforge/build/libs/*.jar
+          retention-days: 3
+          include-hidden-files: true
+          if-no-files-found: error
