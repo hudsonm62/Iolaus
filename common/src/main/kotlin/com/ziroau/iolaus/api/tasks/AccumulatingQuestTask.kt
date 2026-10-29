@@ -34,7 +34,7 @@ interface AccumulatingQuestTask<I, T : AccumulatingQuestTask<I, T>> : BaseQuestT
         progress: AbstractNbtNumber,
         input: I
     ): AbstractNbtNumber {
-        val current = storage().read(progress)
+        val current = storage().readLong(progress)
         val delta = contribution(input)
 
         // Only guard against Long overflow
@@ -55,7 +55,7 @@ interface AccumulatingQuestTask<I, T : AccumulatingQuestTask<I, T>> : BaseQuestT
         // Need to handle floating point precision issues here :/
         // For now, using `nextDown()` to ensure that we don't return 1.0f when the progress is not actually complete
         if (amount == 0L) return 0f
-        val current = storage().read(progress)
+        val current = storage().readLong(progress)
         val ratio = (current.toDouble() / amount.toDouble()).toFloat()
         return if (current < amount) minOf(ratio, 1f.nextDown()) else ratio
     }
