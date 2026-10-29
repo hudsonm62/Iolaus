@@ -2,11 +2,25 @@ name: 📃 Docs
 on:
   workflow_dispatch:
   push:
-    branches: master
+    branches:
+      - master
+    paths: # only run on relevant changes
+      - ".github/workflows/docs.yml"
+      - "zensical.toml"
+      - "build-docs.ps1"
+      - "docs/**"
+      - "common/**"
+      - "fabric/**"
+      - "neoforge/**"
+      - "build.gradle"
+      - "gradle.properties"
+      - "settings.gradle"
+
 permissions:
   contents: read
   pages: write
   id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
