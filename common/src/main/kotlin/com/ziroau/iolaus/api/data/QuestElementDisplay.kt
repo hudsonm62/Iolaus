@@ -16,7 +16,7 @@ import earth.terrarium.heracles.api.quests.defaults.ItemQuestIcon
  * @property descriptionOverride The description of the quest. If empty, the default description will be used.
  * @property iconOverride The icon representing the quest.
  */
-data class QuestElementDisplay(
+open class QuestElementDisplay(
     val titleOverride: String = "",
     val descriptionOverride: String = "",
     val iconOverride: QuestIcon<*> = ItemQuestIcon.AIR
