@@ -18,7 +18,7 @@ import earth.terrarium.heracles.api.quests.defaults.ItemQuestIcon
  * Provides common data methods for creation of Task/Reward Settings.
  *
  * Most of the methods here are just optional property wrappers for the [SettingInitializer] methods,
- * but there are also some methods required for working with [CustomizableQuestElementExtended] & [QuestElementDisplay].
+ * but there are also some methods required for working with [CustomizableQuestElementExtended] and [QuestElementDisplay].
  */
 abstract class AbstractSettingInitializer<T> : SettingInitializer<T> {
     protected fun textSetting(): TextSetting<String> = TextSetting.INSTANCE
