@@ -14,7 +14,7 @@ edit_uri = "edit/master/docs/"
 nav = [
   { "Getting Started" = "index.md" },
   { "Using the Library" = "usage/index.md" },
-  { "JavaDocs" = "/api" }
+  { "KDocs" = "/api" }
 ]
 
 # extra_css = ["stylesheets/extra.css"]

@@ -86,6 +86,31 @@ subprojects {
             dokka project(":common")
         }
     }
+    dokka {
+        dokkaPublications {
+            html {
+                moduleName.set("Iolaus KDocs")
+            }
+        }
+        dokkaSourceSets {
+            configureEach {
+                jdkVersion.set(21)
+                externalDocumentationLinks {
+                    register("yarn") {
+                        url.set(new URI("https://maven.fabricmc.net/docs/yarn-${yarn_mappings}/"))
+                        packageListUrl.set(new URI("https://maven.fabricmc.net/docs/yarn-${yarn_mappings}/element-list"))
+                    }
+                }
+            }
+            main {
+                sourceLink {
+                    localDirectory.set(file("src/main/kotlin"))
+                    remoteUrl.set(new URI("https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin"))
+                    remoteLineSuffix.set("#L")
+                }
+            }
+        }
+    }
     tasks.register("dokkaJavadocJar", Jar) {
         group = "documentation"
         description = "Packages Dokka documentation into a Javadoc JAR"
