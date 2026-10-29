@@ -19,10 +19,14 @@ interface CountedQuestTask<I, T : CountedQuestTask<I, T>> : BaseQuestTask<I, Abs
 
     /**
      * Determines if the given input matches the task's requirements, and increments progress by 1 if it does.
-     * If you need to increment (or set/decrement) by a different amount, override [test] instead of this.
+     *
+     * If you need to increment (or set/decrement) by a different amount, either override [test]
+     * or use [AccumulatingQuestTask.contribution] instead.
      *
      * @param input The input to check against the task's requirements, as defined by the implementation of this method
      * @return true if the input matches the requirements, therefore incrementing progress, false otherwise
+     * @see AccumulatingQuestTask
+     * @see test
      */
     fun matches(input: I): Boolean
 
@@ -46,6 +50,5 @@ interface CountedQuestTask<I, T : CountedQuestTask<I, T>> : BaseQuestTask<I, Abs
             .coerceIn(0f, 1f)
     }
 
-    override fun storage(): IntegerTaskStorage =
-        IntegerTaskStorage.INSTANCE
+    override fun storage(): IntegerTaskStorage = IntegerTaskStorage.INSTANCE
 }
