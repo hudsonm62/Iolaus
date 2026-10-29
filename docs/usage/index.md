@@ -26,7 +26,6 @@ We'll also need to define a `QuestTaskType` boilerplate code for serialization a
 ```kotlin
 package your.cool.mod.tasks
 
-import com.ziroau.iolaus.api.tasks.BaseQuestTask
 import com.ziroau.iolaus.api.tasks.CountedQuestTask
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
@@ -36,10 +35,10 @@ import net.minecraft.util.Identifier
 
 class MyCoolTask (
     override val taskId: String,
-    override val appearance: QuestElementDisplay,
+    override val display: QuestElementDisplay,
     val someConfigProperty: String,
     override val amount: Int = 1 // required times to complete the task
-) : CountedQuestTask<MyCoolTask> {
+) : CountedQuestTask<MyCoolInputData, MyCoolTask> {
     // Implement your matching logic here
     override fun matches(input: MyCoolInputData): Boolean {
         // everytime `input` matches the criteria for this task, return true
@@ -62,7 +61,7 @@ class MyCoolTask (
                     RecordCodecBuilder.point<MyCoolTask, String>(id),
 
                     QuestElementDisplay.CODEC
-                        .forGetter(MyCoolTask::appearance),
+                        .forGetter(MyCoolTask::display),
 
                     Codec.STRING
                         .optionalFieldOf("someConfigProperty", "")
@@ -140,7 +139,7 @@ import java.util.stream.Stream
 
 class MyCoolReward(
     override val rewardId: String,
-    override val appearance: QuestElementDisplay,
+    override val display: QuestElementDisplay,
     val someConfigProperty: String
 ) : BaseQuestReward<MyCoolReward> {
     // `reward()` defines the behavior when the reward is granted
@@ -167,7 +166,7 @@ class MyCoolReward(
                     RecordCodecBuilder.point<MyCoolReward, String>(id),
 
                     QuestElementDisplay.CODEC
-                        .forGetter(MyCoolReward::appearance),
+                        .forGetter(MyCoolReward::display),
 
                     Codec.STRING
                         .optionalFieldOf("someConfigProperty", "")
@@ -204,7 +203,7 @@ class MyCoolTaskSettings private constructor() : AbstractSettingInitializer<MyCo
     override fun create(task: MyCoolTask?): SettingInitializer.CreationData {
         val settings = SettingInitializer.CreationData()
         settings.put("someConfigProperty", textSetting(), task?.someConfigProperty ?: "")
-        settings.putAppearance(task)
+        settings.putDisplaySettings(task)
         settings.put("amount", intSetting(), task?.amount ?: 1)
         return settings
     }
@@ -214,7 +213,7 @@ class MyCoolTaskSettings private constructor() : AbstractSettingInitializer<MyCo
         val result = MyCoolTask(
             id,
             data.get("someConfigProperty", textSetting()).orElse(task?.someConfigProperty ?: ""),
-            data.getAppearance(task),
+            data.getDisplaySettings(task),
             data.get("amount", intSetting()).orElse(task?.amount ?: 1)
         )
         return result

@@ -37,11 +37,11 @@ abstract class AbstractSettingInitializer<T> : SettingInitializer<T> {
     protected fun questIconSetting(): QuestIconSetting = QuestIconSetting.INSTANCE
 
     /**
-     * Helper method to add the appearance settings to a [CreationData] object.
-     * @param element The [CustomizableQuestElementExtended] to get the appearance data from.
+     * Helper method to add the common display settings to a [CreationData] object.
+     * @param element The [CustomizableQuestElementExtended] to get the common display data from.
      * @param defaults The default [QuestElementDisplay] to use if the element is null.
      */
-    protected fun SettingInitializer.CreationData.putAppearance(
+    protected fun SettingInitializer.CreationData.putDisplaySettings(
         element: CustomizableQuestElementExtended?, defaults: QuestElementDisplay = QuestElementDisplay()
     ) {
         put("title", textSetting(),
@@ -57,11 +57,11 @@ abstract class AbstractSettingInitializer<T> : SettingInitializer<T> {
     }
 
     /**
-     * Helper method to get the appearance data from a [Data] object.
-     * @param element The [CustomizableQuestElementExtended] to get the appearance data from.
+     * Helper method to get the common element display data from a [Data] object.
+     * @param element The [CustomizableQuestElementExtended] to get the common display data from.
      * @param defaults The default [QuestElementDisplay] to use if the element is null.
      */
-    protected fun SettingInitializer.Data.getAppearance(
+    protected fun SettingInitializer.Data.getDisplaySettings(
         element: CustomizableQuestElementExtended?, defaults: QuestElementDisplay = QuestElementDisplay()
     ): QuestElementDisplay {
         return QuestElementDisplay(
