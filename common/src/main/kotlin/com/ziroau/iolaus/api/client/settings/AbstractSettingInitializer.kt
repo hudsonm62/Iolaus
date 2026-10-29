@@ -3,7 +3,6 @@ package com.ziroau.iolaus.api.client.settings
 import com.ziroau.iolaus.api.client.settings.base.StringListSetting
 import com.ziroau.iolaus.api.data.CustomizableQuestElementExtended
 import com.ziroau.iolaus.api.data.QuestElementDisplay
-import earth.terrarium.heracles.api.client.settings.Setting
 import earth.terrarium.heracles.api.client.settings.SettingInitializer
 import earth.terrarium.heracles.api.client.settings.SettingInitializer.CreationData
 import earth.terrarium.heracles.api.client.settings.SettingInitializer.Data
@@ -13,46 +12,29 @@ import earth.terrarium.heracles.api.client.settings.base.IntSetting
 import earth.terrarium.heracles.api.client.settings.base.QuestIconSetting
 import earth.terrarium.heracles.api.client.settings.base.TextSetting
 import earth.terrarium.heracles.api.quests.defaults.ItemQuestIcon
-import net.minecraft.client.gui.widget.ClickableWidget
 
 /**
  * Provides common data methods for creation of Task/Reward Settings.
  *
- * Most of the methods here are just optional type-safe wrappers for the [SettingInitializer] methods,
+ * Most of the methods here are just optional property wrappers for the [SettingInitializer] methods,
  * but there are also some methods required for working with [CustomizableQuestElementExtended] & [QuestElementDisplay].
  */
 abstract class AbstractSettingInitializer<T> : SettingInitializer<T> {
-    @Suppress("UNCHECKED_CAST")
-    protected fun textSetting(): Setting<String, ClickableWidget> =
-        TextSetting.INSTANCE as Setting<String, ClickableWidget>
+    protected fun textSetting(): TextSetting<String> = TextSetting.INSTANCE
 
-    @Suppress("UNCHECKED_CAST")
-    protected fun intSetting(): Setting<Int, ClickableWidget> =
-        IntSetting.ONE as Setting<Int, ClickableWidget>
+    protected fun intSetting(): IntSetting = IntSetting.ONE
 
-    @Suppress("UNCHECKED_CAST")
-    protected fun intZeroSetting(): Setting<Int, ClickableWidget> =
-        IntSetting.ZERO as Setting<Int, ClickableWidget>
+    protected fun intZeroSetting(): IntSetting = IntSetting.ZERO
 
-    @Suppress("UNCHECKED_CAST")
-    protected fun boolTrueSetting(): Setting<Boolean, ClickableWidget> =
-        BooleanSetting.TRUE as Setting<Boolean, ClickableWidget>
+    protected fun boolTrueSetting(): BooleanSetting = BooleanSetting.TRUE
 
-    @Suppress("UNCHECKED_CAST")
-    protected fun boolFalseSetting(): Setting<Boolean, ClickableWidget> =
-        BooleanSetting.FALSE as Setting<Boolean, ClickableWidget>
+    protected fun boolFalseSetting(): BooleanSetting = BooleanSetting.FALSE
 
-    @Suppress("UNCHECKED_CAST")
-    protected fun doubleSetting(): Setting<Double, ClickableWidget> =
-        DoubleSetting.INSTANCE as Setting<Double, ClickableWidget>
+    protected fun doubleSetting(): DoubleSetting = DoubleSetting.INSTANCE
 
-    @Suppress("UNCHECKED_CAST")
-    protected fun stringListSetting(): Setting<List<String>, ClickableWidget> =
-        StringListSetting as Setting<List<String>, ClickableWidget>
+    protected fun stringListSetting(): StringListSetting = StringListSetting
 
-    @Suppress("UNCHECKED_CAST")
-    protected fun questIconSetting(): Setting<ItemQuestIcon, ClickableWidget> =
-        QuestIconSetting.INSTANCE as Setting<ItemQuestIcon, ClickableWidget>
+    protected fun questIconSetting(): QuestIconSetting = QuestIconSetting.INSTANCE
 
     /**
      * Helper method to add the appearance settings to a [CreationData] object.
