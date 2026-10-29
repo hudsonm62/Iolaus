@@ -1,6 +1,7 @@
 package com.ziroau.iolaus.api.data
 
 import earth.terrarium.heracles.api.CustomizableQuestElement
+import earth.terrarium.heracles.api.quests.QuestIcon
 import net.minecraft.text.Text
 
 /**
@@ -42,4 +43,9 @@ interface CustomizableQuestElementExtended : CustomizableQuestElement {
             overridden
         }
     }
+
+    /**
+     * The icon of the element, used in the Quest Viewer.
+     */
+    override fun icon(): QuestIcon<*> = display.iconOverride
 }
