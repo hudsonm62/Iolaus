@@ -1,6 +1,7 @@
 name: 🧪 CI Flow
 
 on:
+  workflow_dispatch: 
   push:
     paths: # only run on relevant changes
       - ".github/workflows/ci.yml"
@@ -13,9 +14,56 @@ on:
       - "**/settings.gradle"
       - "**/build.gradle"
       - "**/gradle.properties"
-  workflow_dispatch:
+      - "zensical.toml"
+      - "build-docs.ps1"
+      - "docs/**"
 
 jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙️ Checkout code
+        uses: actions/checkout@v7
+
+      - name: ⚙️ Setup JDK
+        uses: actions/setup-java@v6
+        with:
+          java-version: 25
+          distribution: temurin
+
+      - name: ⚙️ Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-read-only: false
+          gradle-version: wrapper
+          add-job-summary: "on-failure"
+
+      - name: ⚙️ Make Gradlew Executable
+        shell: bash
+        run: chmod +x ./gradlew
+
+      - name: ⚙️ Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.x
+          cache: "pip"
+
+      - name: ⚙️ Setup Zensical
+        run: pip install zensical
+
+      - name: 🏗️ Build Docs
+        run: ./build-docs.ps1
+        shell: pwsh
+
+      - name: ⏫ Upload Docs Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: docs
+          path: ./build/site
+          retention-days: 3
+          include-hidden-files: true
+          if-no-files-found: error
+
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
