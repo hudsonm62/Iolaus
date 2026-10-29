@@ -1,7 +1,7 @@
 name: 🧪 CI Flow
 
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   push:
     paths: # only run on relevant changes
       - ".github/workflows/ci.yml"
