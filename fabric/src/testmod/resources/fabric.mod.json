@@ -1,0 +1,17 @@
+{
+    "schemaVersion": 1,
+    "id": "iolaus_testmod",
+    "version": "1.2.3",
+    "name": "Iolaus TestMod",
+    "environment": "*",
+    "entrypoints": {
+        "main": ["com.ziroau.iolaus_testmod.IolausTestFabric"],
+        "client": ["com.ziroau.iolaus_testmod.client.IolausTestFabricClient"]
+    },
+    "depends": {
+        "fabric-api": "*",
+        "fabricloader": "*",
+        "minecraft": "1.21.1",
+        "iolaus": "*"
+    }
+}

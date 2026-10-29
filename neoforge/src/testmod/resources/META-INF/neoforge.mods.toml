@@ -1,0 +1,31 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[5.3,)"
+license = "Apache-2.0"
+
+[[mods]]
+modId = "iolaus_testmod"
+version = "${version}"
+displayName = "Iolaus Test Mod"
+description = '''Test Mod for Iolaus'''
+#logoFile = "assets/iolaus/icon.png"
+
+[[dependencies.iolaus_testmod]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.iolaus_testmod]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1]"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.iolaus_testmod]]
+modId = "iolaus"
+type = "required"
+versionRange = "[0.0.1,)"
+ordering = "AFTER"
+side = "BOTH"

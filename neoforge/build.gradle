@@ -7,6 +7,36 @@ architectury {
     neoForge()
 }
 
+// Test Mod Config
+sourceSets {
+    testmod {
+        compileClasspath += sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+loom {
+    mods {
+        "iolaus" {
+            sourceSet sourceSets.main
+        }
+
+        "iolaus_testmod" {
+            sourceSet sourceSets.testmod
+        }
+    }
+
+    runs {
+        testmodClient {
+            client()
+            sourceSet = sourceSets.testmod.name
+            displayName = "Iolaus TestMod Client"
+            runDirectory = file("run/testmod")
+            generateRunConfig = true
+        }
+    }
+}
+////
+
 configurations {
     common {
         canBeResolved = true
@@ -51,6 +81,9 @@ dependencies {
     modImplementation ("com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21:${resourcefullib_version}")
     modImplementation ("earth.terrarium.hermes:hermes-neoforge-1.21.1:${hermes_version}"){ transitive = false }
     modImplementation ("earth.terrarium.olympus:olympus-neoforge-1.21:${olympus_version}")
+
+    // TestMod can access the Iolaus NeoForge implementation
+    testmodImplementation sourceSets.main.output
 }
 
 processResources {

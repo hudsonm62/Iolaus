@@ -7,6 +7,36 @@ architectury {
     fabric()
 }
 
+// Test Mod Config
+sourceSets {
+    testmod {
+        compileClasspath += sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+}
+loom {
+    mods {
+        "iolaus" {
+            sourceSet sourceSets.main
+        }
+
+        "iolaus_testmod" {
+            sourceSet sourceSets.testmod
+        }
+    }
+
+    runs {
+        testmodClient {
+            client()
+            sourceSet = sourceSets.testmod.name
+            displayName = "Iolaus TestMod Client"
+            runDirectory = file("run/testmod")
+            generateRunConfig = true
+        }
+    }
+}
+////
+
 configurations {
     common {
         canBeResolved = true
@@ -43,6 +73,9 @@ dependencies {
     modImplementation ("com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21:${resourcefullib_version}")
     modImplementation ("earth.terrarium.hermes:hermes-fabric-1.21.1:${hermes_version}"){ transitive = false }
     modImplementation ("earth.terrarium.olympus:olympus-fabric-1.21:${olympus_version}")
+
+    // TestMod can access the Iolaus Fabric implementation
+    testmodImplementation sourceSets.main.output
 }
 
 processResources {
