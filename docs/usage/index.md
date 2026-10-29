@@ -1,5 +1,5 @@
 ---
-icon: lucide/book
+icon: lucide/code-xml
 ---
 
 # Using the Library
@@ -8,20 +8,23 @@ Assuming you've [added Iolaus into your `build.gradle`](../index.md#using-iolaus
 
 Before you begin, it's important to understand there are several moving parts when working with Heracles, that Iolaus helps to manage, and in some cases abstract away.
 
-It essentially boils down to:
+The whole process essentially boils down to:
 
-1. Defining Tasks & Rewards
+1. Defining Tasks and/or Rewards
 2. Feeding Input Data to Tasks, then handling progress
-3. Displaying Progress to the Client in the Viewer
-4. Displaying Settings to the Client in the Editor
+3. How to display widgets to the client in the Viewer
+4. How to display & (de)serialize settings to the Client in the Editor
+5. Registering Tasks & Rewards with Heracles
+6. Registering Widgets & Settings with Heracles on the client
 
 ## Defining Tasks
 
-For Tasks, two main components are provided in Iolaus, the `BaseQuestTask` class, and a `CountedQuestTask` class.
-The `CountedQuestTask` is an implementation of `BaseQuestTask` that handles all the storage & NBT heavy lifting for tracking progress
-of how many times `X` needs to be done to complete the task as a whole, and is what you'll likely use for _most_ objectives in your quests.
+For Tasks, Iolaus provides a [`BaseQuestTask`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/tasks/BaseQuestTask.kt) as a ready to go foundation for creating your own.
+The [`CountedQuestTask`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/tasks/CountedQuestTask.kt) is an implementation of `BaseQuestTask` that handles
+all the NBT storage boilerplate for tracking progress of how many times `X` needs to be done to complete the task as a whole, and is what you'll likely use for _most_ tasks in your mod.
 
-We'll also need to define a `QuestTaskType` boilerplate code for serialization and registration with Heracles.
+You'll also need to write [`QuestTaskType`](https://github.com/terrarium-earth/Heracles/blob/1.21.1/common/src/main/java/earth/terrarium/heracles/api/tasks/QuestTaskType.java)
+boilerplate code for serialization of your properties with Heracles.
 
 ```kotlin
 package your.cool.mod.tasks
@@ -33,7 +36,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import earth.terrarium.heracles.api.tasks.QuestTaskType
 import net.minecraft.util.Identifier
 
-class MyCoolTask (
+class MyCoolTask(
     override val taskId: String,
     override val display: QuestElementDisplay,
     val someConfigProperty: String,
@@ -45,8 +48,7 @@ class MyCoolTask (
         return input.someProperty == someConfigProperty
     }
 
-    // Necessary `Type` Boilerplate below for serialization
-    // and registration with Heracles
+    // Necessary `QuestTaskType` Boilerplate below
     companion object {
         @JvmField
         val TYPE: QuestTaskType<MyCoolTask> = Type()
@@ -79,15 +81,18 @@ class MyCoolTask (
 
 !!! note
 
-    See implementation of `CountedQuestTask` if you want to understand how to handle storage & progress tracking, for overriding the `test` method for custom logic.
+    See implementation of [`CountedQuestTask`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/tasks/CountedQuestTask.kt)
+    if you want to understand how to handle storage & progress tracking, for overriding the `test` method for custom logic.
 
 ### Feeding Input Data to Tasks
 
-You'll need to provide your own mechanism for feeding input data into your tasks so that the `matches` method can evaluate it and progress the task accordingly.
+You'll need to provide your own mechanism for feeding input data into your tasks so that the `matches` method (and ultimately, the `test` method) can evaluate it and progress the task accordingly.
 
-Typically you might want to "subscribe" to an event or data source that provides the input data relevant to your task:
+Typically, you might want to "subscribe" to an event or some kind of data source that provides the input data relevant to your task:
 
 ```kotlin
+package your.cool.mod.events
+
 import earth.terrarium.heracles.common.handlers.progress.QuestProgressHandler
 import net.minecraft.server.network.ServerPlayerEntity
 
@@ -118,10 +123,11 @@ object MyCoolEventListener {
 
 ## Defining Rewards
 
-Whilst similar to [Tasks](#defining-tasks), rewards are a bit simpler to implement - We define a class that extends the Iolaus [`BaseQuestReward`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/rewards/BaseQuestReward.kt),
+Whilst similar to [Tasks](#defining-tasks), rewards are a bit simpler to implement - You can define a class that extends the Iolaus [`BaseQuestReward`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/rewards/BaseQuestReward.kt),
 then provide the necessary properties.
 
-For rewards, override the `reward` method to define the behavior when the reward is granted. Similar to tasks, we also need to provide the necessary `QuestRewardType` boilerplate for config serialization.
+For rewards, override the `reward` method to define the behaviour when the reward is granted. Similar to tasks, we also need to provide the necessary
+[`QuestRewardType`](https://github.com/terrarium-earth/Heracles/blob/1.21.1/common/src/main/java/earth/terrarium/heracles/api/rewards/QuestRewardType.java) boilerplate for serialization.
 
 ```kotlin
 package your.cool.mod.rewards
@@ -142,7 +148,7 @@ class MyCoolReward(
     override val display: QuestElementDisplay,
     val someConfigProperty: String
 ) : BaseQuestReward<MyCoolReward> {
-    // `reward()` defines the behavior when the reward is granted
+    // `reward()` defines the behaviour when the reward is granted
     override fun reward(player: ServerPlayerEntity): Stream<ItemStack?> {
         LOGGER.info("Reward '$rewardId' with value $someConfigProperty has been granted :)")
 
@@ -150,8 +156,7 @@ class MyCoolReward(
         return Stream.empty()
     }
 
-    // Necessary `Type` Boilerplate below for serialization
-    // and registration with Heracles
+    // Necessary `QuestRewardType` Boilerplate below
     companion object {
         @JvmField
         val TYPE: QuestRewardType<MyCoolReward> = Type()
@@ -184,11 +189,17 @@ This is what is displayed on the client in the Quest Editor & Viewer.
 
 ### Defining Settings
 
-**Settings** lets you edit the actual config properties for your task & rewards in the in-game editor -- It's then serialized into JSON into the Heracles quest files.
+**Settings** lets you edit the actual config properties for your task & rewards in the in-game editor.
+It's then serialized into JSON in the Heracles quest files.
 
 ![Settings](./settings.png)
 
-In order to define your settings, you can use the `AbstractSettingInitializer` class provided by Iolaus. Note that some methods here are provided for Kotlin inference and convenience.
+In order to define your settings, you can use the [`AbstractSettingInitializer`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/settings/AbstractSettingInitializer.kt) class provided by Iolaus.
+
+!!! note
+
+    Some methods from `AbstractSettingInitializer` are purely optional & for convenience, such as `textSetting()` or `intSetting()`,
+    and don't actually do anything special on their own.
 
 We then override 2x `create()` methods, one is to "put" settings, and the other is to "get" settings and provide default values if necessary (i.e. for missing or malformed JSON properties).
 
@@ -260,7 +271,7 @@ class MyCoolTaskWidget (
 }
 ```
 
-Or for `MyCoolReward`, you would extend `AbstractRewardWidget` instead as this class provides the button and layout for claiming the reward.
+Or for `MyCoolReward`, you would extend `AbstractRewardWidget` instead as this class provides a button and correct layout for claiming the reward.
 
 ```kotlin
 package com.example.mymod.client.widgets
@@ -308,11 +319,68 @@ Iolaus provides some functions you can run from your initialization code to quic
 **From Common Initializer:**
 
 ```kotlin
+import com.ziroau.iolaus.api.registry.TasksRegistry
+import com.ziroau.iolaus.api.registry.RewardsRegistry
 
+object MyCoolModInitializer : ModInitializer {
+    override fun onInitialize() {
+        TasksRegistry.registerAll(
+            MyCoolTask.TYPE,
+            AnotherSickTask.TYPE
+        )
+        RewardsRegistry.registerAll(
+            MyCoolReward.TYPE,
+            AnotherSickReward.TYPE
+        )
+    }
+}
 ```
 
 **From Client Initializer:**
 
-```kotlin
+!!! warning
 
+    DO NOT register widgets and settings from the common initializer, as they are client-side only!
+
+```kotlin
+import com.ziroau.iolaus.api.client.registry.TasksClientRegistry
+import com.ziroau.iolaus.api.client.registry.RewardsClientRegistry
+
+object MyCoolModClientInitializer : ClientModInitializer {
+    override fun onInitializeClient() {
+        TasksClientRegistry.register(
+            MyCoolTask.TYPE,
+            MyCoolTaskSettings.INSTANCE,
+            ::MyCoolTaskWidget
+        ) { progress, task ->
+            val progress = task.storage().readInt(progress.progress()).coerceAtLeast(0)
+            "$progress/${task.amount.coerceAtLeast(1)}"
+        }
+        TasksClientRegistry.register(
+            AnotherSickTask.TYPE,
+            AnotherSickTaskSettings.INSTANCE,
+            ::AnotherSickTaskWidget
+        ) { progress, task ->
+            val progress = task.storage().readInt(progress.progress()).coerceAtLeast(0)
+            "$progress/${task.amount.coerceAtLeast(1)}"
+        }
+
+        RewardsClientRegistry.register(
+            MyCoolReward.TYPE,
+            MyCoolRewardSettings.INSTANCE,
+            MyCoolRewardWidget::of
+        )
+        RewardsClientRegistry.register(
+            AnotherSickReward.TYPE,
+            AnotherSickRewardSettings.INSTANCE,
+            AnotherSickRewardWidget::of
+        )
+    }
+}
 ```
+
+You may have noticed in the client task registration that we provide a lambda to format the progress display.
+Without this lambda, the client would not know how to format and ultimately present the task's progress to the user.
+
+Of course, you can customize this lambda to display the progress in any way that makes sense for your task, however the format
+used in the example would be suitable for all tasks that have a simple progress out of a total amount.

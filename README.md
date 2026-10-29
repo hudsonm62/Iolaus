@@ -15,16 +15,23 @@ To use Iolaus in your mod, add the following to your `build.gradle` file:
 
 ```groovy
 repositories {
-    maven("https://maven.ziroau.com")
+    maven {
+        name = "ziro's maven"
+        url = "https://maven.ziroau.com"
+    }
 }
 dependencies {
     modImplementation "com.ziroau.iolaus:${iolaus_version}+fabric"
 }
 ```
 
-Whilst you _could_ Jar-in-Jar Iolaus, it is entirely untested & recommended to use the `modImplementation` method above to avoid conflicts with other mods.
+For multiloader/architectury setups, you may want to use this in your `common` project:
 
-From here you can access the Iolaus API in your mod code.
+```groovy
+dependencies {
+    modCompileOnlyAPI "com.ziroau.iolaus:${iolaus_version}+fabric"
+}
+```
 
 ### Notice
 
