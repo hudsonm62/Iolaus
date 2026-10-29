@@ -162,7 +162,6 @@ jobs:
             1.21.1
           dependencies: |
             odyssey-quests{modrinth:lo90fZoB}
-            fabric-api{modrinth:P7dR8mSH}
           fail-mode: fail
           retry-attempts: 2
           retry-delay: 10000
