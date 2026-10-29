@@ -47,7 +47,7 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 
     // Heracles
-    modImplementation ("earth.terrarium.heracles:heracles-neoforge-1.21.1:${heracles_version}")
+    modImplementation ("earth.terrarium.heracles:heracles-neoforge-1.21.1:${heracles_version}"){ transitive = false }
     modImplementation ("com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21:${resourcefullib_version}")
     modImplementation ("earth.terrarium.hermes:hermes-neoforge-1.21.1:${hermes_version}"){ transitive = false }
     modImplementation ("earth.terrarium.olympus:olympus-neoforge-1.21:${olympus_version}")
