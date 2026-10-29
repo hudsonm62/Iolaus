@@ -1,5 +1,6 @@
 package com.ziroau.iolaus.api.client.settings
 
+import com.ziroau.iolaus.api.client.settings.base.LongSetting
 import com.ziroau.iolaus.api.client.settings.base.StringListSetting
 import com.ziroau.iolaus.api.data.CustomizableQuestElementExtended
 import com.ziroau.iolaus.api.data.QuestElementDisplay
@@ -23,11 +24,12 @@ abstract class AbstractSettingInitializer<T> : SettingInitializer<T> {
     protected fun textSetting(): TextSetting<String> = TextSetting.INSTANCE
 
     protected fun intSetting(): IntSetting = IntSetting.ONE
-
     protected fun intZeroSetting(): IntSetting = IntSetting.ZERO
 
-    protected fun boolTrueSetting(): BooleanSetting = BooleanSetting.TRUE
+    protected fun longSetting(): LongSetting = LongSetting.ONE
+    protected fun longZeroSetting(): LongSetting = LongSetting.ZERO
 
+    protected fun boolTrueSetting(): BooleanSetting = BooleanSetting.TRUE
     protected fun boolFalseSetting(): BooleanSetting = BooleanSetting.FALSE
 
     protected fun doubleSetting(): DoubleSetting = DoubleSetting.INSTANCE
