@@ -16,6 +16,7 @@ nav = [
   { "Using the Library" = "usage/index.md" },
   { "Advanced" = [
     "advanced/index.md",
+    "advanced/icon-renderer.md",
     "advanced/enums.md",
     { "📃 KDocs" = "/api" }
   ] },
