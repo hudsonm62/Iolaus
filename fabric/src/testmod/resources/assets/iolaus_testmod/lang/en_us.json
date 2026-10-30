@@ -1,0 +1,7 @@
+{
+    "tasks.iolaus_testmod.entityrendertest_task": "Entity Render Test",
+    "setting.iolaus_testmod.entityrendertest_task.title": "Title Override",
+    "setting.iolaus_testmod.entityrendertest_task.description": "Description Override",
+    "setting.iolaus_testmod.entityrendertest_task.icon": "Icon Override",
+    "setting.iolaus_testmod.entityrendertest_task.entity": "Entity to Display"
+}

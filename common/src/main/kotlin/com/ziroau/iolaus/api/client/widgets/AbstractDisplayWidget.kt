@@ -1,6 +1,7 @@
 package com.ziroau.iolaus.api.client.widgets
 
 import com.teamresourceful.resourcefullib.client.scissor.ScissorBoxStack
+import com.ziroau.iolaus.api.client.widgets.renderers.WidgetIconRenderer
 import earth.terrarium.heracles.api.client.DisplayWidget
 import earth.terrarium.heracles.api.quests.QuestIcon
 import net.minecraft.client.MinecraftClient
@@ -23,6 +24,14 @@ abstract class AbstractDisplayWidget : DisplayWidget {
         get() = MinecraftClient.getInstance().textRenderer
 
     protected abstract val widgetItemIcon: QuestIcon<*>
+
+    /**
+     * Renders a custom icon (i.e. an [net.minecraft.entity.Entity]) if the implementing widget has one, and [widgetItemIcon] is empty/air.
+     *
+     * @see com.ziroau.iolaus.api.client.widgets.renderers.WidgetIconRenderer
+     * @see com.ziroau.iolaus.api.client.widgets.renderers.EntityIconRenderer
+     */
+    protected open val iconRenderer: WidgetIconRenderer? = null
 
     protected abstract val widgetTitle: Text
     protected abstract val widgetDescription: Text
@@ -47,7 +56,15 @@ abstract class AbstractDisplayWidget : DisplayWidget {
         hovered: Boolean,
         partialTicks: Float
     ) {
-        widgetItemIcon.render(graphics, x + 5, y + 5, ICON_SIZE, ICON_SIZE)
+        val iconX = x + 5
+        val iconY = y + 5
+        if (!widgetItemIcon.render(
+                graphics,
+                iconX, iconY,
+                ICON_SIZE, ICON_SIZE
+        )) {
+            iconRenderer?.render(graphics, scissor, iconX, iconY, ICON_SIZE)
+        }
 
         // Title
         graphics.drawText(

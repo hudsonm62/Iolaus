@@ -1,9 +1,16 @@
 package com.ziroau.iolaus_testmod
 
+import com.ziroau.iolaus.api.registry.TasksRegistry
+import com.ziroau.iolaus_testmod.tasks.EntityRenderTestTask
 import net.fabricmc.api.ModInitializer
 
 class IolausTestFabric : ModInitializer {
+    companion object {
+        const val MOD_ID = "iolaus_testmod"
+    }
     override fun onInitialize() {
-        println("Hello Fabric world!")
+        TasksRegistry.registerAll(
+            EntityRenderTestTask.TYPE
+        )
     }
 }
