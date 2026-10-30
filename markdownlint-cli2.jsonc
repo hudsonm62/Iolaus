@@ -1,0 +1,9 @@
+{
+    "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/main/schema/markdownlint-config-schema.json",
+    "default": true, // Inherit default settings
+    "MD007": { "indent": 4 }, // Ordered list indent
+    "MD013": false, // Disable max line length
+    "MD033": false, // Allow Inline HTML
+    "MD046": false, // Workaround for MkDocs Material Admonitions
+    "no-hard-tabs": true // Use spaces for tabs
+}

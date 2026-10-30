@@ -3,7 +3,7 @@ site_url = "https://iolaus.ziroau.com"
 site_name = "Iolaus Docs"
 site_description = "Iolaus is a library mod that provides a number of useful things for extending Heracles (aka Odyssey Quests) in your own mods."
 site_dir = "build/site"
-# site_author = ""
+site_author = "Hudson M."
 
 copyright = "Copyright &copy; 2026 Hudson M."
 
@@ -12,9 +12,13 @@ repo_name = "hudsonm62/Iolaus"
 edit_uri = "edit/master/docs/"
 
 nav = [
-  { "Getting Started" = "index.md" },
+  { "Home" = "index.md" },
   { "Using the Library" = "usage/index.md" },
-  { "KDocs" = "/api" }
+  { "Advanced" = [
+    "advanced/index.md",
+    "advanced/enums.md",
+    { "📃 KDocs" = "/api" }
+  ] },
 ]
 
 # extra_css = ["stylesheets/extra.css"]
@@ -44,7 +48,7 @@ features = [
   "navigation.instant.progress",
   "navigation.path",
   # "navigation.prune",
-  "navigation.sections",
+  # "navigation.sections",
   # "navigation.tabs",
   # "navigation.tabs.sticky",
   "navigation.top",
@@ -82,12 +86,16 @@ toggle.icon = "lucide/moon"
 toggle.name = "Switch to system preference"
 
 [[project.extra.social]]
+icon = "simple/modrinth"
+link = "https://modrinth.com/project/BxQzS0ON"
+
+[[project.extra.social]]
 icon = "fontawesome/brands/github"
 link = "https://github.com/hudsonm62/Iolaus"
 
 [[project.extra.social]]
-icon = "simple/modrinth"
-link = "https://modrinth.com/project/BxQzS0ON"
+icon = "simple/kotlin"
+link = "/api"
 
 [project.extra.consent]
 title = "Cookie consent"

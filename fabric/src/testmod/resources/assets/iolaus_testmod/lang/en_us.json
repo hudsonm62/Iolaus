@@ -3,5 +3,12 @@
     "setting.iolaus_testmod.entityrendertest_task.title": "Title Override",
     "setting.iolaus_testmod.entityrendertest_task.description": "Description Override",
     "setting.iolaus_testmod.entityrendertest_task.icon": "Icon Override",
-    "setting.iolaus_testmod.entityrendertest_task.entity": "Entity to Display"
+    "setting.iolaus_testmod.entityrendertest_task.entity": "Entity to Display",
+
+    "rewards.iolaus_testmod.enumtest_reward": "Enum Test Reward",
+    "setting.iolaus_testmod.enumtest_reward.enum1": "Enum1 Value",
+    "setting.iolaus_testmod.enumtest_reward.enum2": "Enum2 Value",
+    "setting.iolaus_testmod.enumtest_reward.title": "Title Override",
+    "setting.iolaus_testmod.enumtest_reward.description": "Description Override",
+    "setting.iolaus_testmod.enumtest_reward.icon": "Icon Override"
 }
