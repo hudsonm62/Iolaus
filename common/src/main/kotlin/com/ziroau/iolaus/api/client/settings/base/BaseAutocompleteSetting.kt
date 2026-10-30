@@ -34,7 +34,7 @@ abstract class BaseAutocompleteSetting  : Setting<String, AutocompleteTextBox<St
      *
      * If `true`, [defaultValue] will be ignored (if input isn't `null`)
      */
-    val allowRawInput: Boolean = false
+    open val allowRawInput: Boolean = false
 
     override fun createWidget(
         old: AutocompleteTextBox<String>?, width: Int, value: String
