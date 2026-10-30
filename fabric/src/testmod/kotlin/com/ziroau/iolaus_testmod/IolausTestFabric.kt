@@ -2,6 +2,7 @@ package com.ziroau.iolaus_testmod
 
 import com.ziroau.iolaus.api.registry.RewardsRegistry
 import com.ziroau.iolaus.api.registry.TasksRegistry
+import com.ziroau.iolaus_testmod.rewards.CommandsListTestReward
 import com.ziroau.iolaus_testmod.rewards.EnumTestReward
 import com.ziroau.iolaus_testmod.tasks.EntityRenderTestTask
 import net.fabricmc.api.ModInitializer
@@ -15,7 +16,8 @@ class IolausTestFabric : ModInitializer {
             EntityRenderTestTask.TYPE
         )
         RewardsRegistry.registerAll(
-            EnumTestReward.TYPE
+            EnumTestReward.TYPE,
+            CommandsListTestReward.TYPE
         )
     }
 }

@@ -10,5 +10,12 @@
     "setting.iolaus_testmod.enumtest_reward.enum2": "Enum2 Value",
     "setting.iolaus_testmod.enumtest_reward.title": "Title Override",
     "setting.iolaus_testmod.enumtest_reward.description": "Description Override",
-    "setting.iolaus_testmod.enumtest_reward.icon": "Icon Override"
+    "setting.iolaus_testmod.enumtest_reward.icon": "Icon Override",
+
+    "rewards.iolaus_testmod.commandslisttest_reward": "Commands List Test Reward",
+    "setting.iolaus_testmod.commandslisttest_reward.commands": "List of Commands",
+    "setting.iolaus_testmod.commandslisttest_reward.permission": "Permission Level",
+    "setting.iolaus_testmod.commandslisttest_reward.title": "Title Override",
+    "setting.iolaus_testmod.commandslisttest_reward.description": "Description Override",
+    "setting.iolaus_testmod.commandslisttest_reward.icon": "Icon Override"
 }

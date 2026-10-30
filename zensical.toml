@@ -18,6 +18,7 @@ nav = [
     "advanced/index.md",
     "advanced/icon-renderer.md",
     "advanced/enums.md",
+    "advanced/multiline-strings.md",
     { "📃 KDocs" = "/api" }
   ] },
 ]
