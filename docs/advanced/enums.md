@@ -16,7 +16,7 @@ First, define a [`StringIdentifiable`](https://maven.fabricmc.net/docs/yarn-1.21
 enum class MyEnum : StringIdentifiable {
     OPTION_ONE,
     OPTION_TWO,
-    OPTION_THREE
+    OPTION_THREE;
 
     override fun asString(): String {
         return name.lowercase()
@@ -34,20 +34,27 @@ class EnumTestReward(
     override val display: QuestElementDisplay
 ) : BaseQuestReward<EnumTestReward> {
     // ...
-}
-```
 
-Also ensure it's part of your Type Codec:
+    // Also ensure it's part of your codec boilerplate:
+    companion object {
+        @JvmField
+        val TYPE: QuestRewardType<EnumTestReward> =
+            QuestTypesFactory.reward(
+                Identifier.of("samplemod", "testenum_reward")
+            ) { id ->
+                RecordCodecBuilder.mapCodec { instance ->
+                    instance.group(
+                        //...
 
-```kotlin
-// ...
-RecordCodecBuilder.mapCodec { instance ->
-instance.group(
-    RecordCodecBuilder.point(id),
-    EnumCodec.of(MyEnum::class.java)
-        .fieldOf("myEnum")
-        .forGetter(EnumTestReward::myEnum)
-    //...
+                        EnumCodec.of(MyEnum::class.java)
+                            .fieldOf("myEnum")
+                            .forGetter(EnumTestReward::myEnum)
+
+                        //...
+                    )
+                }
+            }
+    }
 }
 ```
 
@@ -83,5 +90,5 @@ class EnumTestRewardSettings : AbstractSettingInitializer<EnumTestReward>() {
 ---
 
 And thats essentially it!
-You could also take it a step further in your widgets, and it translatable so your default titles and descriptions can be localized,
+You could also take it a step further in your widgets, and make it translatable so your default titles and descriptions can be localized,
 or perhaps set a custom icon for each enum option. But you can experiment with that on your own as needed.
