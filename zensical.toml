@@ -14,12 +14,17 @@ edit_uri = "edit/master/docs/"
 nav = [
   { "Home" = "index.md" },
   { "Using the Library" = "usage/index.md" },
+  { "Features" = [
+      "features/index.md",
+      "features/multiline-strings.md",
+      "features/enums.md",
+      "features/autocomplete.md",
+    ] },
   { "Advanced" = [
     "advanced/index.md",
-    "advanced/icon-renderer.md",
-    "advanced/enums.md",
-    "advanced/multiline-strings.md",
-    { "📃 KDocs" = "/api" }
+    "advanced/widget-icon-renderer.md",
+
+    { "API KDocs" = "/api" }
   ] },
 ]
 

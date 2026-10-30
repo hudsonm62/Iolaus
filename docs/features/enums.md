@@ -1,14 +1,17 @@
 # Enums
 
-Heracles supports "dropdown" boxes for Enums. However they didn't necessarily provide a flexible way to handle them, so Iolaus has bridged that gap.
+Heracles supports "dropdown" boxes with enums.
+However defining them was a bit messy and not so straightforward.
+
+![img.png](/assets/images/enum-dropdown.png)
 
 !!! note
 
-    You can see a basic implementation of this in the [Test Mod](https://github.com/hudsonm62/Iolaus/tree/master/fabric/src/testmod/kotlin/com/ziroau/iolaus_testmod/rewards/EnumTestReward.kt).
+    You can see a basic implementation in [`EnumTestReward`](https://github.com/hudsonm62/Iolaus/tree/master/fabric/src/testmod/kotlin/com/ziroau/iolaus_testmod/rewards/EnumTestReward.kt).
 
 ---
 
-The first few steps are pretty straightforward..
+The first few steps are straightforward..
 
 First, define a [`StringIdentifiable`](https://maven.fabricmc.net/docs/yarn-1.21.1+build.1/net/minecraft/util/StringIdentifiable.html) enum in your code:
 
@@ -61,8 +64,8 @@ class EnumTestReward(
 ---
 
 Now we need a way to serialize this enum for settings.
-Iolaus provides a [`EnumSetting`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/settings/EnumSettings.kt#L18)
-that handles creating a Heracles Setting ready for use.
+Iolaus provides an [`EnumSetting`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/settings/EnumSettings.kt#L18)
+that handles creating a Heracles `Setting` ready for use.
 
 ```kotlin
 class EnumTestRewardSettings : AbstractSettingInitializer<EnumTestReward>() {

@@ -1,5 +1,6 @@
 package com.ziroau.iolaus_testmod.tasks
 
+import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import com.teamresourceful.resourcefullib.common.codecs.predicates.RestrictedEntityPredicate
 import com.ziroau.iolaus.api.data.QuestElementDisplay
@@ -14,7 +15,8 @@ import net.minecraft.util.Identifier
 class EntityRenderTestTask (
     override val taskId: String,
     override val display: QuestElementDisplay,
-    val entity: RestrictedEntityPredicate
+    val entity: RestrictedEntityPredicate,
+    val alphabet: String = "a"
 ) : BaseQuestTask<Any, AbstractNbtNumber, EntityRenderTestTask> {
     override fun test(type: QuestTaskType<*>, progress: AbstractNbtNumber, input: Any): AbstractNbtNumber = progress
     override fun getProgress(progress: AbstractNbtNumber): Float = 0f
@@ -37,6 +39,10 @@ class EntityRenderTestTask (
                         RestrictedEntityPredicate.CODEC
                             .fieldOf("entity")
                             .forGetter(EntityRenderTestTask::entity),
+
+                        Codec.STRING
+                            .optionalFieldOf("alphabet", "a")
+                            .forGetter(EntityRenderTestTask::alphabet)
 
                     ).apply(instance, ::EntityRenderTestTask)
                 }

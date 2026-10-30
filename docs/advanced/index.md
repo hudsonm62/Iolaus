@@ -6,7 +6,7 @@ hide:
 
 # Advanced
 
-This section covers several advanced uses and features, such as [Enums](enums.md), [Autocomplete](<>), and more.
+This section covers several advanced uses and features, such as [Enums](../features/enums.md), [Autocomplete](<>), and more.
 
 Make sure you're familiar with Heracles & Iolaus basics before diving into these.
 

@@ -2,6 +2,7 @@ package com.ziroau.iolaus_testmod.client.settings
 
 import com.teamresourceful.resourcefullib.common.codecs.predicates.RestrictedEntityPredicate
 import com.ziroau.iolaus.api.client.settings.AbstractSettingInitializer
+import com.ziroau.iolaus_testmod.client.settings.base.AlphabetAutocomplete
 import com.ziroau.iolaus_testmod.tasks.EntityRenderTestTask
 import earth.terrarium.heracles.api.client.settings.SettingInitializer
 import earth.terrarium.heracles.api.client.settings.base.RegistrySetting
@@ -18,6 +19,7 @@ class EntityRenderTestTaskSettings : AbstractSettingInitializer<EntityRenderTest
         val settings = SettingInitializer.CreationData()
         settings.putDisplaySettings(task)
         settings.put("entity", RegistrySetting.ENTITY, getDefaultEntity(task))
+        settings.put("alphabet", AlphabetAutocomplete(), task?.alphabet ?: "a")
         return settings
     }
     override fun create(
@@ -43,7 +45,8 @@ class EntityRenderTestTaskSettings : AbstractSettingInitializer<EntityRenderTest
         return EntityRenderTestTask(
             id,
             data.getDisplaySettings(task),
-            entity
+            entity,
+            data.get("alphabet", AlphabetAutocomplete()).orElse("a")
         )
     }
 

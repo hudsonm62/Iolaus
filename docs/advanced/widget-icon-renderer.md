@@ -68,7 +68,7 @@ RecordCodecBuilder.mapCodec { instance ->
 ---
 
 In your settings, if you're using a `RestrictedEntityPredicate`, you need to define your serialization.
-If you set this up correctly, you'll also get Autocomplete support for any of the `RestrictedEntityPredicate` fields in your settings.
+If you set this up correctly, you'll also get [Autocomplete support](../features/autocomplete.md) for any of the `RestrictedEntityPredicate` fields in your settings.
 
 ![entity autocomplete](/assets/images/entity-autocomplete.png)
 

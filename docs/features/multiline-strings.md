@@ -1,9 +1,7 @@
 # Multiline Strings
 
-Heracles doesn't provide built-in multiline strings, so Iolaus has implemented a solution to handle them. It's actually pretty simple and follows the same pattern as other data types in Heracles.
-
-Since a nicely formatted text box for multiline input didn't exist either, we implemented [`BorderedMultiLineTextBox`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/settings/textbox/BorderedMultiLineTextBox.kt)
-which gets created automatically when using `stringListSetting()` - You can reuse this textbox for any custom multiline string setting input needed in your mod.
+Heracles doesn't provide built-in multiline strings, so Iolaus added support for them via a string list.
+They're simple to implement as they follow the same pattern as other data types in Heracles.
 
 ---
 
