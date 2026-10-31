@@ -13,14 +13,14 @@ For example, this creates an autocomplete setting for the alphabet, and doesn't 
 ```kotlin
 import com.ziroau.iolaus.api.client.settings.base.BaseAutocompleteSetting
 
-class AlphabetAutocomplete : BaseAutocompleteSetting() {
+class AlphabetAutocomplete : BaseAutocompleteSetting(
+    // Lets you write/save anything,
+    // even if it isn't in the suggestions list
+    allowRawInput = false
+) {
     override val suggestions: List<String> = ('a'..'z').map { it.toString() }
     override val defaultValue: String = "a"
-
-    // If true, lets you write/save anything that isn't in the suggestions list, even if its empty
-    override val allowRawInput: Boolean = false
 }
-
 ```
 
 You can then use `AlphabetAutocomplete` in your Settings:

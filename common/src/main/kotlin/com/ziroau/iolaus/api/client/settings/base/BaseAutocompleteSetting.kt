@@ -4,21 +4,24 @@ import earth.terrarium.heracles.api.client.settings.Setting
 import earth.terrarium.olympus.client.components.textbox.autocomplete.AutocompleteTextBox
 
 /**
- * A simple base class creating a Text [Setting] with autocomplete [suggestions].
+ * A simple base class creating a Text [Setting] with [suggestions] autocomplete.
+ * It provides a default implementation for creating the widget and getting the value from it.
  *
- * This class provides a default implementation for creating the widget and getting the value from it.
- * It also enforces that the setting always has a valid value by requiring a [defaultValue].
+ * @param allowRawInput Whether to allow "raw" input that is not in the suggestions list.
  *
  * @property suggestions The [List] of suggestions to display in the autocomplete dropdown.
+ * @property defaultValue The value to default to if the input is empty, invalid or null
  *
  * @see Setting
  * @see AutocompleteTextBox
  */
-abstract class BaseAutocompleteSetting  : Setting<String, AutocompleteTextBox<String>> {
+abstract class BaseAutocompleteSetting (
+    protected val allowRawInput: Boolean = false
+): Setting<String, AutocompleteTextBox<String>> {
     /**
      * Value to default to if the input is empty, invalid or null - This is used to ensure that the setting always has a valid value.
      *
-     * If you want to allow empty or "any" value, even if its not in the suggestions list,
+     * If you want to allow an empty or just any value, even if it's not in the suggestions list,
      * set this variable to "" and set [allowRawInput] to `true`.
      */
     abstract val defaultValue: String
@@ -29,19 +32,10 @@ abstract class BaseAutocompleteSetting  : Setting<String, AutocompleteTextBox<St
      */
     abstract val suggestions: List<String>
 
-    /**
-     * Whether to allow "raw" input that is not in the suggestions list.
-     *
-     * If `true`, [defaultValue] will be ignored (if input isn't `null`)
-     */
-    open val allowRawInput: Boolean = false
-
     override fun createWidget(
         old: AutocompleteTextBox<String>?, width: Int, value: String
     ): AutocompleteTextBox<String> {
-        val input = buildList {
-            addAll(suggestions)
-        }.distinct().sorted()
+        val input = suggestions.distinct().sorted()
 
         return AutocompleteTextBox(
             old, value, width, 24, input,
@@ -53,5 +47,13 @@ abstract class BaseAutocompleteSetting  : Setting<String, AutocompleteTextBox<St
         )
     }
 
-    override fun getValue(widget: AutocompleteTextBox<String>?): String = widget?.rawValue?.trim() ?: defaultValue
+    override fun getValue(widget: AutocompleteTextBox<String>?): String {
+        val value = widget?.rawValue?.trim() ?: return defaultValue
+
+        if (allowRawInput) return value
+
+        return suggestions.firstOrNull {
+            it.equals(value, ignoreCase = true)
+        } ?: defaultValue
+    }
 }
