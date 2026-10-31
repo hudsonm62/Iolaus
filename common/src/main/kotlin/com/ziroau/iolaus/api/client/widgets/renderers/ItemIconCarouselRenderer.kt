@@ -61,12 +61,12 @@ class ItemIconCarouselRenderer private constructor(
             icons.map { it.defaultStack }, intervalMs
         )
         @JvmStatic @JvmOverloads
+        @JvmName("ofStacks")
         fun of(
             iconStacks: List<ItemStack>, intervalMs: Long = DEFAULT_INTERVAL
         ) = ItemIconCarouselRenderer(
             iconStacks.map { it.copy() }, intervalMs
         )
-
 
         @JvmStatic
         fun of(vararg icons: Item) = of(icons.toList())
