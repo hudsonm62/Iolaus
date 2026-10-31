@@ -3,7 +3,8 @@
 Iolaus provides a [`WidgetIconRenderer`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/widgets/renderers/WidgetIconRenderer.kt) interface
 for handling and displaying advanced icons in widgets.
 
-It should also be noted that the Item Icon defined in [`QuestElementDisplay`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/data/QuestElementDisplay.kt)
+Assuming you're using an [Iolaus based widget](https://github.com/hudsonm62/Iolaus/tree/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/widgets),
+it should also be noted that the Item Icon defined in [`QuestElementDisplay`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/data/QuestElementDisplay.kt)
 will always override the renderer icon, if one is provided.
 
 ```kotlin
@@ -23,8 +24,8 @@ class ExampleWidget (
 
 ## Entity Renderer
 
-Iolaus provides an [`EntityIconRenderer`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/widgets/renderers/EntityIconRenderer.kt), which is a implementation of the [Widget Icon Renderer](#widget-icon-renderer).
-The output looks identical to Heracles' existing entity rendering, as we're using the same underlying functions.
+Iolaus' [`EntityIconRenderer`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/widgets/renderers/EntityIconRenderer.kt) creates a 3D render of an entity to display as the icon.
+The result looks identical to Heracles' existing entity rendering, as we're using the same underlying functions.
 
 ![Entity Icon Renderer Example](/assets/images/entity-renderer.png)
 
@@ -99,8 +100,39 @@ class EntityRenderTestTaskWidget (
     There are several overloads of `EntityIconRenderer.of` that allow you to render entities from different sources,
     such as `RestrictedEntityPredicate`, `EntityType`, or even directly from a `String` identifier.
 
+## Item Carousel Renderer
+
+Iolaus' [`ItemIconCarouselRenderer`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/widgets/renderers/ItemIconCarouselRenderer.kt)
+renders a "carousel" of items, which is used to rotate through a list of items in a widget. This could be particularly
+useful for tasks and rewards that involve multiple blocks/items.
+
+![item carousel](/assets/images/carousel-renderer.gif)
+
+!!! tip
+
+    You can pass in either [`ItemStack`](https://maven.fabricmc.net/docs/yarn-1.21.1+build.1/net/minecraft/item/ItemStack.html) or [`Item`](https://maven.fabricmc.net/docs/yarn-1.21.1+build.1/net/minecraft/item/package-summary.html) instances.
+
+```kotlin
+/**
+ * This is just a test to show the ItemIconCarouselRenderer.
+ *
+ * In practice, you would/could allow Quest Editors to define
+ * icons to be used, instead of hardcoding them like this.
+ */
+class VeryCoolWidget (
+    override val task: VeryCoolTask,
+    override val progress: TaskProgress<AbstractNbtNumber>
+) : AbstractProgressTaskWidget<Any, AbstractNbtNumber, VeryCoolTask>() {
+    override val iconRenderer = ItemIconCarouselRenderer.of(
+        1000L, // Optional rotation interval in ms
+        Items.ENDER_CHEST, Items.CHEST, Items.BARREL, Items.SHULKER_BOX
+    )
+    //... insert remaining implementation here
+}
+```
+
 ## Creating Custom Icon Renderers
 
 TBA
 
-<!-- will cobblemon renderer as the example later -->
+<!-- will use cobblemon renderer as the example later -->

@@ -30,6 +30,7 @@ abstract class AbstractDisplayWidget : DisplayWidget {
      *
      * @see com.ziroau.iolaus.api.client.widgets.renderers.WidgetIconRenderer
      * @see com.ziroau.iolaus.api.client.widgets.renderers.EntityIconRenderer
+     * @see com.ziroau.iolaus.api.client.widgets.renderers.ItemIconCarouselRenderer
      */
     protected open val iconRenderer: WidgetIconRenderer? = null
 
