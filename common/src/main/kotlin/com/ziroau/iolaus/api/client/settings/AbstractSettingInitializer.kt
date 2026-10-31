@@ -34,7 +34,7 @@ abstract class AbstractSettingInitializer<T> : SettingInitializer<T> {
 
     protected fun doubleSetting(): DoubleSetting = DoubleSetting.INSTANCE
 
-    protected fun stringListSetting(): StringListSetting = StringListSetting
+    protected fun stringListSetting(): StringListSetting = StringListSetting.INSTANCE
 
     protected fun questIconSetting(): QuestIconSetting = QuestIconSetting.INSTANCE
 

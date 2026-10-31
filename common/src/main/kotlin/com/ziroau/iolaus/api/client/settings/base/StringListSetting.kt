@@ -8,14 +8,19 @@ import net.minecraft.text.Text
 
 /**
  * Creates a settings entry that lets you edit a multiline list of strings.
- * Each line is treated as a separate string.
+ * Each line is treated as a separate string, and empty lines are stripped out.
  *
- * Uses a [BorderedMultiLineTextBox] to allow for multiline editing.
+ * Uses Iolaus' [BorderedMultiLineTextBox] to allow for multiline editing.
  */
-object StringListSetting : Setting<List<String>, BorderedMultiLineTextBox> {
-    private val highlighter = object : TextHighlighter {
-        override fun highlight(text: String): Text = Text.literal(text)
-        override fun getTextColor(): Int = 0xFFE0E0E0.toInt()
+class StringListSetting : Setting<List<String>, BorderedMultiLineTextBox> {
+    companion object {
+        @JvmField
+        val INSTANCE = StringListSetting()
+
+        private val highlighter = object : TextHighlighter {
+            override fun highlight(text: String): Text = Text.literal(text)
+            override fun getTextColor(): Int = 0xFFE0E0E0.toInt()
+        }
     }
 
     override fun createWidget(
