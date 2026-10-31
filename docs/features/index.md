@@ -1,7 +1,7 @@
 ---
 icon: lucide/flame
 hide:
-  - path
+    - path
 ---
 
 # Features

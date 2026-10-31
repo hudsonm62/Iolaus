@@ -12,7 +12,7 @@
             }
         },
         {
-            "files": ["*.json", "*.jsonc", ".prettierrc"],
+            "files": ["*.json", "*.jsonc", ".prettierrc", "*.md"],
             "options": {
                 "tabWidth": 4
             }

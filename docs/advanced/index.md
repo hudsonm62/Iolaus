@@ -1,7 +1,7 @@
 ---
 icon: lucide/settings-2
 hide:
-  - path
+    - path
 ---
 
 # Advanced
