@@ -46,7 +46,7 @@ interface AccumulatingQuestTask<I, T : AccumulatingQuestTask<I, T>> : BaseQuestT
                 Long.MIN_VALUE
 
             else -> current + delta
-        }
+        }.coerceAtMost(amount)
 
         return storage().set(updated)
     }
