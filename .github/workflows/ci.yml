@@ -104,20 +104,16 @@ jobs:
           $Version = (Get-Content gradle.properties | Select-String '^mod_version =').ToString().Split('=')[1].Trim()
           echo "version=$Version" >> $env:GITHUB_OUTPUT
 
-      - name: 📦 Upload Fabric Artifacts
+      - name: 📦 Upload Artifacts
         uses: actions/upload-artifact@v7
+        if: always()
         with:
           name: ${{ steps.get-version.outputs.version }}-${{ github.run_id }}.${{ github.run_attempt }}.${{ steps.short-sha.outputs.sha }}+fabric
-          path: fabric/build/libs/*.jar
-          retention-days: 3
-          include-hidden-files: true
-          if-no-files-found: error
-
-      - name: 📦 Upload NeoForge Artifacts
-        uses: actions/upload-artifact@v7
-        with:
-          name: ${{ steps.get-version.outputs.version }}-${{ github.run_id }}.${{ github.run_attempt }}.${{ steps.short-sha.outputs.sha }}+neoforge
-          path: neoforge/build/libs/*.jar
+          path: |
+            neoforge/build/libs/*.jar
+            neoforge/build/reports/**/*
+            fabric/build/libs/*.jar
+            fabric/build/reports/**/*
           retention-days: 3
           include-hidden-files: true
           if-no-files-found: error
