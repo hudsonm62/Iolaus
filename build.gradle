@@ -37,6 +37,10 @@ subprojects {
             name = "DeDiamondPro"
             url = "https://maven.dediamondpro.dev/releases"
         }
+        maven {
+            name = "ziro's maven"
+            url = "https://maven.ziroau.com"
+        }
     }
 
     dependencies {

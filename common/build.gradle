@@ -13,4 +13,7 @@ dependencies {
     modCompileOnlyApi ("com.teamresourceful.resourcefullib:resourcefullib-fabric-1.21:${resourcefullib_version}")
     modCompileOnlyApi ("earth.terrarium.hermes:hermes-fabric-1.21.1:${hermes_version}"){ transitive = false }
     modCompileOnlyApi ("earth.terrarium.olympus:olympus-fabric-1.21:${olympus_version}")
+
+    // PermissionValidator API
+    modCompileOnlyApi ("com.ziroau:permissionvalidator:${permissionvalidator_version}:fabric-mc1.21.1")
 }

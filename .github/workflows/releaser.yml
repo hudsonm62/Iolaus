@@ -139,6 +139,7 @@ jobs:
           dependencies: |
             odyssey-quests{modrinth:lo90fZoB}
             kotlin-for-forge{modrinth:ordsPcFz}
+            permissionvalidator(embedded){modrinth:MgGi86RS}
           fail-mode: fail
           retry-attempts: 2
           retry-delay: 10000
@@ -158,10 +159,12 @@ jobs:
           version-type: ${{ github.event.inputs.version-type }}
           loaders: |
             fabric
+            quilt
           game-versions: |
             1.21.1
           dependencies: |
             odyssey-quests{modrinth:lo90fZoB}
+            permissionvalidator(embedded){modrinth:MgGi86RS}
           fail-mode: fail
           retry-attempts: 2
           retry-delay: 10000
@@ -176,7 +179,6 @@ jobs:
           version: ${{ steps.get-version.outputs.version }}+neoforge
           file: neoforge/build/libs/iolaus-${{ steps.get-version.outputs.version }}+neoforge.jar
           sources: neoforge/build/libs/iolaus-${{ steps.get-version.outputs.version }}+neoforge-sources.jar
-          # javadoc: neoforge/build/libs/iolaus-${{ steps.get-version.outputs.version }}+neoforge-javadoc.jar
 
       - name: 🚀 ziro maven (Fabric)
         uses: hudsonm62/maven/.github/actions/publish-maven@master
@@ -188,4 +190,3 @@ jobs:
           version: ${{ steps.get-version.outputs.version }}+fabric
           file: fabric/build/libs/iolaus-${{ steps.get-version.outputs.version }}+fabric.jar
           sources: fabric/build/libs/iolaus-${{ steps.get-version.outputs.version }}+fabric-sources.jar
-          # javadoc: fabric/build/libs/iolaus-${{ steps.get-version.outputs.version }}+fabric-javadoc.jar

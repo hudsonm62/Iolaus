@@ -13,7 +13,9 @@
     "license": "Apache-2.0",
     "icon": "assets/iolaus/icon.png",
     "environment": "*",
-    "entrypoints": {},
+    "entrypoints": {
+        "main": ["com.ziroau.iolaus.fabric.IolausFabric"]
+    },
     "depends": {
         "minecraft": "1.21.1",
         "java": ">=21",

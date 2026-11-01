@@ -82,6 +82,10 @@ dependencies {
     modImplementation ("earth.terrarium.hermes:hermes-neoforge-1.21.1:${hermes_version}"){ transitive = false }
     modImplementation ("earth.terrarium.olympus:olympus-neoforge-1.21:${olympus_version}")
 
+    // PermissionValidator API
+    modImplementation "com.ziroau:permissionvalidator:${permissionvalidator_version}:neoforge-mc1.21.1"
+    include "com.ziroau:permissionvalidator:${permissionvalidator_version}:neoforge-mc1.21.1"
+
     // TestMod can access the Iolaus NeoForge implementation
     testmodImplementation sourceSets.main.output
 }
