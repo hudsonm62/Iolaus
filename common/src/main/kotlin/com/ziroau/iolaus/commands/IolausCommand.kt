@@ -3,6 +3,9 @@ package com.ziroau.iolaus.commands
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
+import com.ziroau.iolaus.api.data.IolausSuggestions.QUEST_ID_SUGGESTER
+import com.ziroau.iolaus.api.data.IolausSuggestions.REWARD_ID_SUGGESTER
+import com.ziroau.iolaus.api.data.IolausSuggestions.TASK_ID_SUGGESTER
 import com.ziroau.permissionvalidator.api.PermissionManager
 import com.ziroau.permissionvalidator.api.PermissionManager.requires
 import earth.terrarium.heracles.api.events.HeraclesEvents
@@ -17,7 +20,12 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 
 /**
- * The `/iolaus` commands tree - Basically purely admin facing
+ * The `/iolaus` commands tree
+ *
+ * Commands here may _potentially_ be removed in the future if they ever become redundant with Heracles' own commands.
+ *
+ * Try to only use these for debug & server administrative purposes.
+ * Avoid outright relying on them in mcfunctions or otherwise in production unless truly necessary.
  */
 object IolausCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
@@ -41,9 +49,11 @@ object IolausCommand {
             .then(
                 CommandManager.argument("player", EntityArgumentType.player())
                     .then(
-                        CommandManager.argument("taskid", StringArgumentType.word())
+                        CommandManager.argument("questid", StringArgumentType.word())
+                            .suggests(QUEST_ID_SUGGESTER)
                             .then(
-                                CommandManager.argument("questid", StringArgumentType.word())
+                                CommandManager.argument("taskid", StringArgumentType.word())
+                                    .suggests(TASK_ID_SUGGESTER)
                                     .executes { ctx -> completeQuestTask(ctx) }
                             )
                     )
@@ -55,9 +65,11 @@ object IolausCommand {
             .then(
                 CommandManager.argument("player", EntityArgumentType.player())
                     .then(
-                        CommandManager.argument("rewardid", StringArgumentType.word())
+                        CommandManager.argument("questid", StringArgumentType.word())
+                            .suggests(QUEST_ID_SUGGESTER)
                             .then(
-                                CommandManager.argument("questid", StringArgumentType.word())
+                                CommandManager.argument("rewardid", StringArgumentType.word())
+                                    .suggests(REWARD_ID_SUGGESTER)
                                     .executes { ctx -> claimReward(ctx) }
                             )
                     )
@@ -83,10 +95,10 @@ object IolausCommand {
         source.titleLine(Text.literal("---- Iolaus Commands ----"))
         source.helpLine("/iolaus help", Text.literal("Displays this help message"))
         if (PermissionManager.hasPermission(source, IolausPermissions.COMPLETE_TASK)) {
-            source.helpLine("/iolaus completetask <player> <taskid> <questid>", Text.literal("Completes a task"))
+            source.helpLine("/iolaus completetask <player> <questid> <taskid>", Text.literal("Completes a task"))
         }
         if(PermissionManager.hasPermission(source, IolausPermissions.CLAIM_REWARD)) {
-            source.helpLine("/iolaus claimreward <player> <rewardid> <questid>", Text.literal("Claims a reward"))
+            source.helpLine("/iolaus claimreward <player> <questid> <rewardid>", Text.literal("Claims a reward"))
         }
 
         return 1

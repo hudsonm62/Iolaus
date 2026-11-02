@@ -5,10 +5,10 @@ Iolaus adds some useful commands that (for some reason) aren't already part of t
 - `/iolaus` & `/iolaus help`
     - Shows the help message.
     - **Permission**: `iolaus`
-- `/iolaus completetask <player> <taskid> <questid>`
+- `/iolaus completetask <player> <questid> <taskid>`
     - Marks a task as complete.
     - **Permission**: `iolaus.completetask`
-- `/iolaus claimreward <player> <taskid> <questid>`
+- `/iolaus claimreward <player> <questid> <rewardid>`
     - Claims a reward for a completed task.
     - **Permission**: `iolaus.claimreward`
 
