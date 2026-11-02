@@ -74,9 +74,6 @@ dependencies {
     modImplementation ("earth.terrarium.hermes:hermes-fabric-1.21.1:${hermes_version}"){ transitive = false }
     modImplementation ("earth.terrarium.olympus:olympus-fabric-1.21:${olympus_version}")
 
-    // Fabric Permissions API
-    modApi "me.lucko:fabric-permissions-api:${fabric_permissions_api_version}"
-
     // PermissionValidator API
     modImplementation "com.ziroau:permissionvalidator:${permissionvalidator_version}:fabric-mc1.21.1"
     include "com.ziroau:permissionvalidator:${permissionvalidator_version}:fabric-mc1.21.1"

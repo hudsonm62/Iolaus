@@ -3,37 +3,30 @@ package com.ziroau.iolaus.commands
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
-import com.ziroau.permissionvalidator.api.Permission
 import com.ziroau.permissionvalidator.api.PermissionManager
+import com.ziroau.permissionvalidator.api.PermissionManager.requires
 import earth.terrarium.heracles.api.events.HeraclesEvents
 import earth.terrarium.heracles.api.events.TaskEventTarget
 import earth.terrarium.heracles.common.handlers.progress.QuestProgressHandler
 import earth.terrarium.heracles.common.handlers.quests.QuestHandler
 import net.minecraft.command.argument.EntityArgumentType
-import net.minecraft.nbt.AbstractNbtNumber
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.MutableText
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
-import java.util.function.Predicate
 
 /**
  * The `/iolaus` commands tree - Basically purely admin facing
  */
 object IolausCommand {
-    fun permission(permission: Permission): Predicate<ServerCommandSource> {
-        return Predicate { source ->
-            PermissionManager.hasPermission(source, permission)
-        }
-    }
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         val root = CommandManager.literal("iolaus")
-            .requires(permission(IolausPermissions.ROOT))
+            .requires(IolausPermissions.ROOT)
             .executes { modInfo(it.source) }
             .then(
                 CommandManager.literal("help")
-                    .requires(permission(IolausPermissions.ROOT))
+                    .requires(IolausPermissions.ROOT)
                     .executes { modInfo(it.source) }
             )
             .then(completeTaskNode())
@@ -44,7 +37,7 @@ object IolausCommand {
 
     private fun completeTaskNode() =
         CommandManager.literal("completetask")
-            .requires(permission(IolausPermissions.COMPLETE_TASK))
+            .requires(IolausPermissions.COMPLETE_TASK)
             .then(
                 CommandManager.argument("player", EntityArgumentType.player())
                     .then(
@@ -58,7 +51,7 @@ object IolausCommand {
 
     private fun claimRewardNode() =
         CommandManager.literal("claimreward")
-            .requires(permission(IolausPermissions.CLAIM_REWARD))
+            .requires(IolausPermissions.CLAIM_REWARD)
             .then(
                 CommandManager.argument("player", EntityArgumentType.player())
                     .then(
