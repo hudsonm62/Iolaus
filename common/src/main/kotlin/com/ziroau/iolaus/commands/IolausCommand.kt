@@ -93,12 +93,12 @@ object IolausCommand {
         }
 
         source.titleLine(Text.literal("---- Iolaus Commands ----"))
-        source.helpLine("/iolaus help", Text.literal("Displays this help message"))
+        source.helpLine("/iolaus help", Text.translatable("command.iolaus.help.help"))
         if (PermissionManager.hasPermission(source, IolausPermissions.COMPLETE_TASK)) {
-            source.helpLine("/iolaus completetask <player> <questid> <taskid>", Text.literal("Completes a task"))
+            source.helpLine("/iolaus completetask <player> <questid> <taskid>", Text.translatable("command.iolaus.help.completetask"))
         }
         if(PermissionManager.hasPermission(source, IolausPermissions.CLAIM_REWARD)) {
-            source.helpLine("/iolaus claimreward <player> <questid> <rewardid>", Text.literal("Claims a reward"))
+            source.helpLine("/iolaus claimreward <player> <questid> <rewardid>", Text.translatable("command.iolaus.help.claimreward"))
         }
 
         return 1
@@ -112,10 +112,10 @@ object IolausCommand {
         val questId = StringArgumentType.getString(ctx, "questid")
 
         val quest = QuestHandler.get(questId) ?: run {
-            return source.failure("Unable to find quest: '$questId'.")
+            return source.failure("command.iolaus.completetask.failure.questnotfound", questId)
         }
         val task = quest.tasks()[taskId] ?: run {
-            return source.failure("Unable to find task: '$taskId' in quest '$questId'.")
+            return source.failure("command.iolaus.completetask.failure.tasknotfound", taskId, questId)
         }
 
         val questsProgress = QuestProgressHandler.getProgress(player.server, player.uuid)
@@ -123,8 +123,7 @@ object IolausCommand {
         val taskProgress = questProgress.getTask(task)
 
         if (taskProgress.isComplete)
-            return source.failure("Task '$taskId' in quest '$questId' is already complete for '${player.name.string}'!")
-
+            return source.failure("command.iolaus.completetask.failure.alreadycomplete", taskId, questId, player.name.string)
 
         // Force completion regardless of task type
         taskProgress.isComplete = true
@@ -143,9 +142,9 @@ object IolausCommand {
         QuestProgressHandler.sync(player, listOf(questId))
 
         return if (taskProgress.isComplete) {
-            source.success("Successfully completed '$taskId' in quest '$questId' for '${player.name.string}'.")
+            source.success("command.iolaus.completetask.success", true, taskId, questId, player.name.string)
         } else {
-            source.failure("Unknown error when trying to complete '$taskId' in quest '$questId' for '${player.name.string}'.")
+            source.failure("command.iolaus.completetask.failure.unknown", taskId, questId, player.name.string)
         }
     }
 
@@ -156,14 +155,20 @@ object IolausCommand {
         val questId = StringArgumentType.getString(ctx, "questid")
 
         val questObj = QuestHandler.get(questId) ?: run {
-            return source.failure("command.iolaus.claimreward.questnotfound", true, questId)
+            return source.failure("command.iolaus.claimreward.questnotfound", questId)
+        }
+        questObj.rewards[rewardId] ?: run {
+            return source.failure("command.iolaus.claimreward.rewardnotfound", rewardId, questId)
+        }
+        val questProg = QuestProgressHandler.getProgress(player.server, player.uuid).getProgress(questId)
+        if(!questProg.canClaim(rewardId)) {
+            return source.failure("command.iolaus.claimreward.rewardnotclaimable", rewardId, questId)
         }
 
         questObj.claimAllowedReward(player, questId, rewardId)
 
         return source.success(
-            "command.iolaus.claimreward.success",
-            true,
+            "command.iolaus.claimreward.success", true,
             rewardId, questId, player.name.string
         )
     }

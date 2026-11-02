@@ -1,4 +1,19 @@
 {
     "gui.iolaus.widget.complete": "Complete",
-    "gui.iolaus.widget.incomplete": "Incomplete"
+    "gui.iolaus.widget.incomplete": "Incomplete",
+
+    "command.iolaus.help.help": "Displays this message",
+    "command.iolaus.help.completetask": "Completes a task",
+    "command.iolaus.help.claimreward": "Claims a reward",
+
+    "command.iolaus.completetask.failure.questnotfound": "Unable to find quest '%1$s'.",
+    "command.iolaus.completetask.failure.tasknotfound": "Unable to find task '%1$s' in quest '%2$s'.",
+    "command.iolaus.completetask.failure.alreadycomplete": "Task '%1$s' in quest '%2$s' is already complete for player %3$s!",
+    "command.iolaus.completetask.success": "Successfully completed task '%1$s' in quest '%2$s' for player %3$s.",
+    "command.iolaus.completetask.failure.unknown": "Unknown error when trying to complete task '%1$s' in quest '%2$s' for player %3$s.",
+
+    "command.iolaus.claimreward.questnotfound": "Quest '%1$s' could not be found.",
+    "command.iolaus.claimreward.rewardnotfound": "Reward '%1$s' could not be found in quest '%2$s'.",
+    "command.iolaus.claimreward.rewardnotclaimable": "Reward '%1$s' from quest '%2$s' cannot be claimed.",
+    "command.iolaus.claimreward.success": "Successfully claimed reward '%1$s' from quest '%2$s' for player %3$s."
 }
