@@ -175,7 +175,7 @@ object IolausCommand {
 
     private fun ServerCommandSource.success(message: String, broadcastToOps: Boolean = false, vararg args: String): Int {
         sendFeedback(
-            { Text.translatable(message).formatted(Formatting.GREEN) },
+            { Text.translatable(message, *args).formatted(Formatting.GREEN) },
             broadcastToOps
         )
         return 1
@@ -183,13 +183,13 @@ object IolausCommand {
 
     private fun ServerCommandSource.info(message: String, broadcastToOps: Boolean = false, vararg args: String) {
         sendFeedback(
-            { Text.translatable(message).formatted(Formatting.GRAY) },
+            { Text.translatable(message, *args).formatted(Formatting.GRAY) },
             broadcastToOps
         )
     }
 
-    private fun ServerCommandSource.failure(message: String, broadcastToOps: Boolean = false, vararg args: String): Int {
-        sendError(Text.translatable(message).formatted(Formatting.RED))
+    private fun ServerCommandSource.failure(message: String, vararg args: String): Int {
+        sendError(Text.translatable(message, *args).formatted(Formatting.RED))
         return 0
     }
 }
