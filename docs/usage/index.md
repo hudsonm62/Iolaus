@@ -4,6 +4,13 @@ icon: lucide/code-xml
 
 # Using the Library
 
+!!! abstract "Minecraft Mappings"
+
+    Yarn Mappings are used for Iolaus, therefore all code examples will use them.
+
+    If you're used to Mojang Mappings, you can use [this tool](https://linkie.shedaniel.dev/mappings?namespace=yarn&version=1.21.1&search=&translateMode=none)
+    to assist with converting between them.
+
 Assuming you've [added Iolaus into your `build.gradle`](../index.md#using-iolaus){ data-preview } already, you can start using the library in your mod.
 
 Before you begin, it's important to understand there are several moving parts when working with Heracles, that Iolaus helps to manage, and in some cases abstract away.

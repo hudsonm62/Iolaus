@@ -24,6 +24,7 @@ nav = [
   { "Advanced" = [
     "advanced/index.md",
     "advanced/widget-icon-renderer.md",
+    "advanced/byte-task-storage.md",
 
     { "API KDocs" = "/api" }
   ] },
