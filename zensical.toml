@@ -19,6 +19,7 @@ nav = [
       "features/multiline-strings.md",
       "features/enums.md",
       "features/autocomplete.md",
+      "features/commands.md",
     ] },
   { "Advanced" = [
     "advanced/index.md",
