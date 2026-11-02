@@ -32,10 +32,5 @@
                 "id": "heracles"
             }
         }
-    },
-    "jars": [
-        {
-            "file": "META-INF/jars/permissionvalidator-${permissionvalidator_version}-fabric-mc1.21.1.jar"
-        }
-    ]
+    }
 }

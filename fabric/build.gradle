@@ -75,7 +75,7 @@ dependencies {
     modImplementation ("earth.terrarium.olympus:olympus-fabric-1.21:${olympus_version}")
 
     // PermissionValidator API
-    modImplementation "com.ziroau:permissionvalidator:${permissionvalidator_version}:fabric-mc1.21.1"
+    modApi  "com.ziroau:permissionvalidator:${permissionvalidator_version}:fabric-mc1.21.1"
     include "com.ziroau:permissionvalidator:${permissionvalidator_version}:fabric-mc1.21.1"
 
     // TestMod can access the Iolaus Fabric implementation
@@ -84,13 +84,8 @@ dependencies {
 
 processResources {
     inputs.property 'version', project.version
-    inputs.property 'permissionvalidator_version', project.permissionvalidator_version
-
     filesMatching('fabric.mod.json') {
-        expand(
-                version: inputs.properties.version,
-                permissionvalidator_version: inputs.properties.permissionvalidator_version
-        )
+        expand(version: inputs.properties.version)
     }
 }
 
