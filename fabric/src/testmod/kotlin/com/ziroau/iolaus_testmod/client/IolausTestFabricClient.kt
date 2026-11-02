@@ -6,16 +6,19 @@ import com.ziroau.iolaus_testmod.client.settings.BoolTestTaskSettings
 import com.ziroau.iolaus_testmod.client.settings.CommandsListTestRewardSettings
 import com.ziroau.iolaus_testmod.client.settings.EntityRenderTestTaskSettings
 import com.ziroau.iolaus_testmod.client.settings.EnumTestRewardSettings
+import com.ziroau.iolaus_testmod.client.settings.ExtendedDisplayTestTaskSettings
 import com.ziroau.iolaus_testmod.client.settings.LongStorageTestTaskSettings
 import com.ziroau.iolaus_testmod.client.widgets.BoolTestTaskWidget
 import com.ziroau.iolaus_testmod.client.widgets.CommandsListTestRewardWidget
 import com.ziroau.iolaus_testmod.client.widgets.EntityRenderTestTaskWidget
 import com.ziroau.iolaus_testmod.client.widgets.EnumTestRewardWidget
+import com.ziroau.iolaus_testmod.client.widgets.ExtendedDisplayTestTaskWidget
 import com.ziroau.iolaus_testmod.client.widgets.LongStorageTestTaskWidget
 import com.ziroau.iolaus_testmod.rewards.CommandsListTestReward
 import com.ziroau.iolaus_testmod.rewards.EnumTestReward
 import com.ziroau.iolaus_testmod.tasks.BoolTestTask
 import com.ziroau.iolaus_testmod.tasks.EntityRenderTestTask
+import com.ziroau.iolaus_testmod.tasks.ExtendedDisplayTestTask
 import com.ziroau.iolaus_testmod.tasks.LongStorageTestTask
 import net.fabricmc.api.ClientModInitializer
 
@@ -30,6 +33,14 @@ class IolausTestFabricClient : ClientModInitializer {
             LongStorageTestTask.TYPE,
             LongStorageTestTaskSettings.INSTANCE,
             ::LongStorageTestTaskWidget
+        )  { progress, task ->
+            val progress = task.storage().readLong(progress.progress()).coerceAtLeast(0L)
+            "$progress/${task.amount.coerceAtLeast(1L)}"
+        }
+        TasksClientRegistry.register(
+            ExtendedDisplayTestTask.TYPE,
+            ExtendedDisplayTestTaskSettings.INSTANCE,
+            ::ExtendedDisplayTestTaskWidget
         )  { progress, task ->
             val progress = task.storage().readLong(progress.progress()).coerceAtLeast(0L)
             "$progress/${task.amount.coerceAtLeast(1L)}"

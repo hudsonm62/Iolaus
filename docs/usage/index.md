@@ -38,7 +38,7 @@ package your.cool.mod.tasks
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import com.ziroau.iolaus.api.data.QuestElementDisplay
+import com.ziroau.iolaus.api.data.BasicQuestElementDisplay
 import com.ziroau.iolaus.api.registry.QuestTypesFactory
 import com.ziroau.iolaus.api.tasks.CountedQuestTask
 import com.ziroau.iolaus.samples.data.MyCoolInputData
@@ -47,7 +47,7 @@ import net.minecraft.util.Identifier
 
 class MyCoolTask(
     override val taskId: String,
-    override val display: QuestElementDisplay,
+    override val display: BasicQuestElementDisplay, // shared widget display settings
     val someConfigProperty: String,
     override val amount: Int = 1 // required times to complete the task
 ) : CountedQuestTask<MyCoolInputData, MyCoolTask> {
@@ -67,9 +67,9 @@ class MyCoolTask(
             ) { id ->
                 RecordCodecBuilder.mapCodec { instance ->
                     instance.group(
-                        RecordCodecBuilder.point<MyCoolTask, String>(id),
+                        RecordCodecBuilder.point(id),
 
-                        QuestElementDisplay.CODEC
+                        BasicQuestElementDisplay.CODEC
                             .forGetter(MyCoolTask::display),
 
                         Codec.STRING
@@ -77,8 +77,8 @@ class MyCoolTask(
                             .forGetter(MyCoolTask::someConfigProperty),
 
                         Codec.INT
-                            .optionalFieldOf("amount", 1)
-                            .forGetter(MyCoolTask::amount)
+                            .fieldOf("amount")
+                            .forGetter(MyCoolTask::amount),
 
                     ).apply(instance, ::MyCoolTask)
                 }
@@ -145,7 +145,7 @@ package your.cool.mod.rewards
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import com.ziroau.iolaus.api.data.QuestElementDisplay
+import com.ziroau.iolaus.api.data.BasicQuestElementDisplay
 import com.ziroau.iolaus.api.registry.QuestTypesFactory
 import com.ziroau.iolaus.api.rewards.BaseQuestReward
 import earth.terrarium.heracles.api.rewards.QuestRewardType
@@ -156,7 +156,7 @@ import java.util.stream.Stream
 
 class MyCoolReward(
     override val rewardId: String,
-    override val display: QuestElementDisplay,
+    override val display: BasicQuestElementDisplay,
     val someConfigProperty: String
 ) : BaseQuestReward<MyCoolReward> {
     // `reward()` defines the behaviour when the reward is granted
@@ -179,7 +179,7 @@ class MyCoolReward(
                     instance.group(
                         RecordCodecBuilder.point<MyCoolReward, String>(id),
 
-                        QuestElementDisplay.CODEC
+                        BasicQuestElementDisplay.CODEC
                             .forGetter(MyCoolReward::display),
 
                         Codec.STRING

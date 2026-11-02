@@ -2,7 +2,7 @@ package com.ziroau.iolaus_testmod.tasks
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import com.ziroau.iolaus.api.data.QuestElementDisplay
+import com.ziroau.iolaus.api.data.BasicQuestElementDisplay
 import com.ziroau.iolaus.api.registry.QuestTypesFactory
 import com.ziroau.iolaus.api.tasks.AccumulatingQuestTask
 import com.ziroau.iolaus_testmod.IolausTestFabric.Companion.MOD_ID
@@ -12,7 +12,7 @@ import net.minecraft.util.Identifier
 class LongStorageTestTask(
     override val taskId: String,
     override val amount: Long = 100L,
-    override val display: QuestElementDisplay
+    override val display: BasicQuestElementDisplay
 ) : AccumulatingQuestTask<Long, LongStorageTestTask> {
     override fun contribution(input: Long): Long = input
 
@@ -31,8 +31,8 @@ class LongStorageTestTask(
                             .fieldOf("amount")
                             .forGetter(LongStorageTestTask::amount),
 
-                        QuestElementDisplay.CODEC
-                            .forGetter(LongStorageTestTask::display),
+                        BasicQuestElementDisplay.CODEC
+                            .forGetter(LongStorageTestTask::display)
 
                     ).apply(instance, ::LongStorageTestTask)
                 }

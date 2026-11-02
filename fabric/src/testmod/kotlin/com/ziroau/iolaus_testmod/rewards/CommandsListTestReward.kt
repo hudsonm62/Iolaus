@@ -2,7 +2,7 @@ package com.ziroau.iolaus_testmod.rewards
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import com.ziroau.iolaus.api.data.QuestElementDisplay
+import com.ziroau.iolaus.api.data.BasicQuestElementDisplay
 import com.ziroau.iolaus.api.registry.QuestTypesFactory
 import com.ziroau.iolaus.api.rewards.BaseQuestReward
 import com.ziroau.iolaus_testmod.IolausTestFabric.Companion.MOD_ID
@@ -16,7 +16,7 @@ class CommandsListTestReward(
     override val rewardId: String,
     val commands: List<String>,
     val permission: Int = 4,
-    override val display: QuestElementDisplay
+    override val display: BasicQuestElementDisplay
 ) : BaseQuestReward<CommandsListTestReward> {
     override fun reward(player: ServerPlayerEntity): Stream<ItemStack?> {
         /** Sample List:
@@ -39,7 +39,7 @@ class CommandsListTestReward(
             ) { id ->
                 RecordCodecBuilder.mapCodec { instance ->
                     instance.group(
-                        RecordCodecBuilder.point<CommandsListTestReward, String>(id),
+                        RecordCodecBuilder.point(id),
 
                         Codec.STRING.listOf()
                             .optionalFieldOf("commands", emptyList<String>())
@@ -49,7 +49,7 @@ class CommandsListTestReward(
                             .optionalFieldOf("permission", 4)
                             .forGetter(CommandsListTestReward::permission),
 
-                        QuestElementDisplay.CODEC
+                        BasicQuestElementDisplay.CODEC
                             .forGetter(CommandsListTestReward::display)
 
                         ).apply(instance, ::CommandsListTestReward)

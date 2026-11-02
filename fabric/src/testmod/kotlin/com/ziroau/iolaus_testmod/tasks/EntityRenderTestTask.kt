@@ -3,7 +3,7 @@ package com.ziroau.iolaus_testmod.tasks
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import com.teamresourceful.resourcefullib.common.codecs.predicates.RestrictedEntityPredicate
-import com.ziroau.iolaus.api.data.QuestElementDisplay
+import com.ziroau.iolaus.api.data.BasicQuestElementDisplay
 import com.ziroau.iolaus.api.registry.QuestTypesFactory
 import com.ziroau.iolaus.api.tasks.BaseQuestTask
 import com.ziroau.iolaus_testmod.IolausTestFabric
@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier
 
 class EntityRenderTestTask (
     override val taskId: String,
-    override val display: QuestElementDisplay,
+    override val display: BasicQuestElementDisplay,
     val entity: RestrictedEntityPredicate,
     val alphabet: String = "a"
 ) : BaseQuestTask<Any, AbstractNbtNumber, EntityRenderTestTask> {
@@ -31,9 +31,9 @@ class EntityRenderTestTask (
             ) { id ->
                 RecordCodecBuilder.mapCodec { instance ->
                     instance.group(
-                        RecordCodecBuilder.point<EntityRenderTestTask, String>(id),
+                        RecordCodecBuilder.point(id),
 
-                        QuestElementDisplay.CODEC
+                        BasicQuestElementDisplay.CODEC
                             .forGetter(EntityRenderTestTask::display),
 
                         RestrictedEntityPredicate.CODEC

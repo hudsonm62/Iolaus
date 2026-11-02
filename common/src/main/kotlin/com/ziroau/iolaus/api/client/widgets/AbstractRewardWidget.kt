@@ -18,7 +18,16 @@ import net.minecraft.client.sound.PositionedSoundInstance
 import net.minecraft.sound.SoundEvents
 import net.minecraft.util.Identifier
 
-abstract class AbstractRewardWidget : AbstractDisplayWidget() {
+/**
+ * A class you can use to quickly create a reward widget for your reward type.
+ * Includes a claim button that will send a packet to the server to claim the reward.
+ *
+ * @property claimButtonTexture The texture used for the claim button in the reward widget -- By default, uses "`heracles:textures/item/lootbag.png`" which is what the builtin Heracles rewards use.
+ */
+abstract class AbstractRewardWidget(
+    protected open val claimButtonTexture: Identifier =
+        Identifier.of("heracles", "textures/item/lootbag.png")
+) : AbstractDisplayWidget() {
     abstract val reward: QuestReward<*>
     abstract val questId: String
     abstract val progress: QuestProgress?
@@ -28,13 +37,6 @@ abstract class AbstractRewardWidget : AbstractDisplayWidget() {
         private const val BUTTON_SIZE = 20
         private const val BUTTON_RIGHT_OFFSET = 30
         private const val BUTTON_TOP_OFFSET = 11
-
-        /**
-         * The texture used for the claim button in the reward widget.
-         * By default, uses "heracles:textures/item/lootbag.png" which is what the builtin Heracles rewards use.
-         */
-        protected val CLAIM_BUTTON_TEXTURE: Identifier =
-            Identifier.of("heracles", "textures/item/lootbag.png")
 
         fun getQuestContext(): Pair<String, QuestProgress?> {
             val screen = MinecraftClient.getInstance().currentScreen
@@ -93,7 +95,7 @@ abstract class AbstractRewardWidget : AbstractDisplayWidget() {
         )
 
         graphics.drawTexture(
-            CLAIM_BUTTON_TEXTURE, buttonX + 2, buttonY + 2,
+            claimButtonTexture, buttonX + 2, buttonY + 2,
             0f, 0f, 16, 16, 16, 16
         )
 

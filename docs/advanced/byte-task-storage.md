@@ -30,7 +30,7 @@ For example:
 // Define a task
 class BoolTestTask(
     override val taskId: String,
-    override val display: QuestElementDisplay
+    override val display: BasicQuestElementDisplay
 ) : BooleanQuestTask<BoolTestTask> {
 
     // The underlying input is literally just a [Boolean]

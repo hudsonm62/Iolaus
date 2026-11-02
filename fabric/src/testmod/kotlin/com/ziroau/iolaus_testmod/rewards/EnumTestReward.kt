@@ -2,7 +2,7 @@ package com.ziroau.iolaus_testmod.rewards
 
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import com.teamresourceful.resourcefullib.common.codecs.EnumCodec
-import com.ziroau.iolaus.api.data.QuestElementDisplay
+import com.ziroau.iolaus.api.data.BasicQuestElementDisplay
 import com.ziroau.iolaus.api.registry.QuestTypesFactory
 import com.ziroau.iolaus.api.rewards.BaseQuestReward
 import com.ziroau.iolaus_testmod.IolausTestFabric.Companion.MOD_ID
@@ -18,7 +18,7 @@ class EnumTestReward(
     override val rewardId: String,
     val enum1: TestEnum1 = TestEnum1.VALUE1,
     val enum2: TestEnum2 = TestEnum2.VALUE3,
-    override val display: QuestElementDisplay
+    override val display: BasicQuestElementDisplay
 ) : BaseQuestReward<EnumTestReward> {
     override fun reward(player: ServerPlayerEntity): Stream<ItemStack?> {
         println("Rewarding player ${player.name.string} with enum1: $enum1 and enum2: $enum2")
@@ -44,7 +44,7 @@ class EnumTestReward(
                             .fieldOf("enum2")
                             .forGetter(EnumTestReward::enum2),
 
-                        QuestElementDisplay
+                        BasicQuestElementDisplay
                             .CODEC.fieldOf("display")
                             .forGetter(EnumTestReward::display)
                     ).apply(instance) { rewardId, enum1, enum2, display ->

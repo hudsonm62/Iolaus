@@ -25,6 +25,7 @@ nav = [
     "advanced/index.md",
     "advanced/widget-icon-renderer.md",
     "advanced/byte-task-storage.md",
+    "advanced/quest-element-displays.md",
 
     { "API KDocs" = "/api" }
   ] },

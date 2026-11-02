@@ -2,6 +2,7 @@ package com.ziroau.iolaus.api.client.settings
 
 import com.ziroau.iolaus.api.client.settings.base.LongSetting
 import com.ziroau.iolaus.api.client.settings.base.StringListSetting
+import com.ziroau.iolaus.api.data.BasicQuestElementDisplay
 import com.ziroau.iolaus.api.data.CustomizableQuestElementExtended
 import com.ziroau.iolaus.api.data.QuestElementDisplay
 import earth.terrarium.heracles.api.client.settings.SettingInitializer
@@ -44,7 +45,8 @@ abstract class AbstractSettingInitializer<T> : SettingInitializer<T> {
      * @param defaults The default [QuestElementDisplay] to use if the element is null.
      */
     protected fun SettingInitializer.CreationData.putDisplaySettings(
-        element: CustomizableQuestElementExtended?, defaults: QuestElementDisplay = QuestElementDisplay()
+        element: CustomizableQuestElementExtended?,
+        defaults: QuestElementDisplay = BasicQuestElementDisplay()
     ) {
         put("title", textSetting(),
             element?.title() ?: defaults.titleOverride)
@@ -64,9 +66,10 @@ abstract class AbstractSettingInitializer<T> : SettingInitializer<T> {
      * @param defaults The default [QuestElementDisplay] to use if the element is null.
      */
     protected fun SettingInitializer.Data.getDisplaySettings(
-        element: CustomizableQuestElementExtended?, defaults: QuestElementDisplay = QuestElementDisplay()
-    ): QuestElementDisplay {
-        return QuestElementDisplay(
+        element: CustomizableQuestElementExtended?,
+        defaults: QuestElementDisplay = BasicQuestElementDisplay()
+    ): BasicQuestElementDisplay {
+        return BasicQuestElementDisplay(
             titleOverride = get("title", textSetting())
                 .orElse(element?.title() ?: defaults.titleOverride),
 

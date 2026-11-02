@@ -17,7 +17,7 @@ class CommandsListTestReward(
     override val rewardId: String,
     val commands: List<String>,
     val permission: Int = 4,
-    override val display: QuestElementDisplay
+    override val display: BasicQuestElementDisplay
 )
 ```
 

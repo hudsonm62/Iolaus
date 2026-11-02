@@ -34,7 +34,7 @@ Then attach to your Task or Reward properties:
 class EnumTestReward(
     override val rewardId: String,
     val myEnum: MyEnum = MyEnum.OPTION_ONE,
-    override val display: QuestElementDisplay
+    override val display: BasicQuestElementDisplay
 ) : BaseQuestReward<EnumTestReward> {
     // ...
 

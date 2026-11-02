@@ -6,6 +6,7 @@ import com.ziroau.iolaus_testmod.rewards.CommandsListTestReward
 import com.ziroau.iolaus_testmod.rewards.EnumTestReward
 import com.ziroau.iolaus_testmod.tasks.BoolTestTask
 import com.ziroau.iolaus_testmod.tasks.EntityRenderTestTask
+import com.ziroau.iolaus_testmod.tasks.ExtendedDisplayTestTask
 import com.ziroau.iolaus_testmod.tasks.LongStorageTestTask
 import net.fabricmc.api.ModInitializer
 
@@ -17,7 +18,8 @@ class IolausTestFabric : ModInitializer {
         TasksRegistry.registerAll(
             EntityRenderTestTask.TYPE,
             LongStorageTestTask.TYPE,
-            BoolTestTask.TYPE
+            BoolTestTask.TYPE,
+            ExtendedDisplayTestTask.TYPE
         )
         RewardsRegistry.registerAll(
             EnumTestReward.TYPE,

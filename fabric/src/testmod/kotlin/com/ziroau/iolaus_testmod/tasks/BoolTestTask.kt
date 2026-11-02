@@ -1,7 +1,7 @@
 package com.ziroau.iolaus_testmod.tasks
 
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import com.ziroau.iolaus.api.data.QuestElementDisplay
+import com.ziroau.iolaus.api.data.BasicQuestElementDisplay
 import com.ziroau.iolaus.api.registry.QuestTypesFactory
 import com.ziroau.iolaus.api.tasks.BooleanQuestTask
 import com.ziroau.iolaus_testmod.IolausTestFabric
@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier
 
 class BoolTestTask(
     override val taskId: String,
-    override val display: QuestElementDisplay
+    override val display: BasicQuestElementDisplay
 ) : BooleanQuestTask<BoolTestTask> {
     override fun type(): QuestTaskType<BoolTestTask> = TYPE
     companion object {
@@ -21,9 +21,9 @@ class BoolTestTask(
             ) { id ->
                 RecordCodecBuilder.mapCodec { instance ->
                     instance.group(
-                        RecordCodecBuilder.point<BoolTestTask, String>(id),
+                        RecordCodecBuilder.point(id),
 
-                        QuestElementDisplay.CODEC
+                        BasicQuestElementDisplay.CODEC
                             .forGetter(BoolTestTask::display),
                     ).apply(instance, ::BoolTestTask)
                 }

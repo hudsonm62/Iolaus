@@ -41,7 +41,7 @@ In your task/reward, define a `RestrictedEntityPredicate`:
 ```kotlin
 class EntityRenderTestTask (
     override val taskId: String,
-    override val display: QuestElementDisplay,
+    override val display: BasicQuestElementDisplay,
     val entity: RestrictedEntityPredicate
 ) {
     // implementation here
@@ -55,7 +55,7 @@ RecordCodecBuilder.mapCodec { instance ->
     instance.group(
         RecordCodecBuilder.point(id),
 
-        QuestElementDisplay.CODEC
+        BasicQuestElementDisplay.CODEC
             .forGetter(EntityRenderTestTask::display),
 
         // Entity field for the renderer
