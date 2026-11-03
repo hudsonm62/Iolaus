@@ -30,4 +30,5 @@ class EntityRenderTestTaskWidget (
         get() = task.titleOr(entityTranslatedName.copy().append(" Render Test Task"))
     override val widgetDescription: Text
         get() = task.descriptionOr(Text.literal("This is a test task for rendering entities in widgets."))
+    override val iconTooltip = listOf(Text.literal("Entity:"), entityTranslatedName)
 }

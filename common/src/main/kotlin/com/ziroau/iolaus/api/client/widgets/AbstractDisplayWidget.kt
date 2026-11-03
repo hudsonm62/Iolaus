@@ -1,6 +1,7 @@
 package com.ziroau.iolaus.api.client.widgets
 
 import com.teamresourceful.resourcefullib.client.scissor.ScissorBoxStack
+import com.teamresourceful.resourcefullib.client.utils.ScreenUtils.setTooltip
 import com.ziroau.iolaus.api.client.widgets.renderers.WidgetIconRenderer
 import earth.terrarium.heracles.api.client.DisplayWidget
 import earth.terrarium.heracles.api.quests.QuestIcon
@@ -24,6 +25,7 @@ abstract class AbstractDisplayWidget : DisplayWidget {
         get() = MinecraftClient.getInstance().textRenderer
 
     protected abstract val widgetItemIcon: QuestIcon<*>
+    protected open val iconTooltip: List<Text> = emptyList()
 
     /**
      * Renders a custom icon (i.e. an [net.minecraft.entity.Entity]) if the implementing widget has one, and [widgetItemIcon] is empty/air.
@@ -81,9 +83,25 @@ abstract class AbstractDisplayWidget : DisplayWidget {
             descriptionColor, false
         )
 
+        // Tooltip
+        if (iconTooltip.isNotEmpty() && isHoveringIcon(mouseX, mouseY, x, y))
+            setTooltip(iconTooltip)
+
         // Subclass-specific rendering
         renderExtra(
             graphics, x, y, width, mouseX, mouseY
         )
+    }
+
+    /**
+     * Draws a tooltip when hovering, if the widget implements [iconTooltip]
+     */
+    private fun isHoveringIcon(mouseX: Int, mouseY: Int, x: Int, y: Int): Boolean {
+        val iconX = x + 5
+        val iconY = y + 5
+        return mouseX >= iconX &&
+                mouseX < iconX + ICON_SIZE &&
+                mouseY >= iconY &&
+                mouseY < iconY + ICON_SIZE
     }
 }
