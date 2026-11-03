@@ -2,9 +2,11 @@
 
 Iolaus adds some useful commands that (for some reason) aren't already part of the `/heracles` set:
 
-- `/iolaus` & `/iolaus help`
-    - Shows the help message.
+- `/iolaus`
     - **Permission**: `iolaus`
+- `/iolaus debug <player> <questid>`
+    - Shows debug information for a player's quest.
+    - **Permission**: `iolaus.debug`
 - `/iolaus completetask <player> <questid> <taskid>`
     - Marks a task as complete.
     - **Permission**: `iolaus.completetask`

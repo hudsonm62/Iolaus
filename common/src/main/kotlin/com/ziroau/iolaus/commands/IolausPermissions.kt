@@ -16,11 +16,16 @@ object IolausPermissions {
     @JvmStatic
     val CLAIM_REWARD = PermissionManager.create("iolaus.claimreward", PermissionLevel.MULTIPLAYER_MANAGEMENT)
 
+    /** /iolaus debug */
+    @JvmStatic
+    val DEBUG = PermissionManager.create("iolaus.debug", PermissionLevel.MULTIPLAYER_MANAGEMENT)
+
     fun init() {
         PermissionManager.initialize(listOf(
             ROOT,
             COMPLETE_TASK,
-            CLAIM_REWARD
+            CLAIM_REWARD,
+            DEBUG
         ))
     }
 }
