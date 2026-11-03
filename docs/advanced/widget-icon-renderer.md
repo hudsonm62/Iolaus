@@ -131,6 +131,45 @@ class VeryCoolWidget (
 }
 ```
 
+## Player Head Icon Renderer
+
+Iolaus' [`PlayerHeadIconRenderer`](https://github.com/hudsonm62/Iolaus/blob/master/common/src/main/kotlin/com/ziroau/iolaus/api/client/widgets/renderers/PlayerHeadIconRenderer.kt)
+renders a player head, which can either be displayed as a flat image or a 3D item.
+
+It supports using either:
+
+- Player `String` username
+- Player `UUID`
+- `GameProfile`
+- Base64-encoded skin data `String`
+
+![player head](/assets/images/player-head-renderer-flat.png)
+
+![player head](/assets/images/player-head-renderer.png)
+
+![player head render](../assets/images/player-head-renderer-base64.png)
+
+```kotlin
+class VeryCoolWidget (
+    override val task: VeryCoolTask,
+    override val progress: TaskProgress<AbstractNbtNumber>
+) : AbstractProgressTaskWidget<Any, AbstractNbtNumber, VeryCoolTask>() {
+    // Use the viewing player, for example:
+    val viewingPlayer = MinecraftClient.getInstance().player?.gameProfile
+    override val iconRenderer = if(viewingPlayer != null) {
+        PlayerHeadIconRenderer.of(viewingPlayer, THREE_DIMENSIONAL)
+    } else { null }
+    //... insert remaining implementation here
+}
+```
+
+!!! tip
+
+    You could _theoretically_ decode a skin texture from a built in mod resource pack (which could be overridden by other packs)
+    in code at runtime.
+
+    That would probably be a nicer solution than hardcoding a Base64 string.
+
 ## Creating Custom Icon Renderers
 
 TBA

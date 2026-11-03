@@ -1,9 +1,12 @@
 package com.ziroau.iolaus_testmod.client.widgets
 
 import com.ziroau.iolaus.api.client.widgets.AbstractBooleanTaskWidget
+import com.ziroau.iolaus.api.client.widgets.renderers.PlayerHeadIconRenderer
+import com.ziroau.iolaus.api.client.widgets.renderers.utility.PlayerHeadRenderMode.THREE_DIMENSIONAL
 import com.ziroau.iolaus_testmod.tasks.BoolTestTask
 import earth.terrarium.heracles.api.quests.QuestIcon
 import earth.terrarium.heracles.common.handlers.progress.TaskProgress
+import net.minecraft.client.MinecraftClient
 import net.minecraft.nbt.NbtByte
 import net.minecraft.text.Text
 
@@ -19,4 +22,17 @@ class BoolTestTaskWidget(
 
     override val widgetDescription: Text
         get() = task.descriptionOr(Text.literal("This is a test task for byte storage with Booleans"))
+
+    //val viewingPlayerProfile = MinecraftClient.getInstance().player?.gameProfile
+    //override val iconRenderer = if(viewingPlayerProfile != null) {
+    //    PlayerHeadIconRenderer.of(viewingPlayerProfile, THREE_DIMENSIONAL)
+    //} else { null }
+
+    // Find Base64 textures on Head Databases
+    /// Or encode your own skin image to Base64 and use that instead!
+    override val iconRenderer = PlayerHeadIconRenderer
+        .ofTexture(
+            "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzMzZGNmYjRkYTEwMTc3MjY0OTY4YjQ0OWU3MjRhZGViZWUzYmMzM2I3MmJhZTg1ODQyYjRhYWI5YmQ5YzRkYiJ9fX0=",
+            THREE_DIMENSIONAL
+        )
 }
