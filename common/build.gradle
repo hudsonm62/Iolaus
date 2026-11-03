@@ -15,5 +15,5 @@ dependencies {
     modCompileOnlyApi ("earth.terrarium.olympus:olympus-fabric-1.21:${olympus_version}")
 
     // PermissionValidator API
-    modCompileOnlyApi ("com.ziroau:permissionvalidator:${permissionvalidator_version}:fabric-mc1.21.1")
+    modApi ("com.ziroau:permissionvalidator:${permissionvalidator_version}:fabric-mc1.21.1")
 }
