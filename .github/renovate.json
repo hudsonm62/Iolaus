@@ -14,6 +14,11 @@
             "allowedVersions": "/\\+1\\.21\\.1$/"
         },
         {
+            "description": "Only allow NeoForge 21.1.x releases",
+            "matchPackageNames": ["net.neoforged:neoforge"],
+            "allowedVersions": "/^21\\.1\\./"
+        },
+        {
             "description": "Only allow Yarn mappings for Minecraft 1.21.1",
             "matchPackageNames": ["net.fabricmc:yarn"],
             "allowedVersions": "/^1\\.21\\.1\\+build\\.\\d+$/"
