@@ -26,6 +26,7 @@ object IolausSuggestions {
      * @return An empty suggestion result if the quest ID cannot be resolved.
      */
     @JvmStatic
+    @JvmOverloads
     fun suggestEntriesForQuest(
         context: CommandContext<ServerCommandSource>,
         builder: SuggestionsBuilder,
