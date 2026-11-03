@@ -4,9 +4,7 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import com.ziroau.iolaus.Iolaus.MOD_ID
-import com.ziroau.iolaus.api.data.IolausSuggestions.QUEST_ID_SUGGESTER
-import com.ziroau.iolaus.api.data.IolausSuggestions.REWARD_ID_SUGGESTER
-import com.ziroau.iolaus.api.data.IolausSuggestions.TASK_ID_SUGGESTER
+import com.ziroau.iolaus.api.commands.IolausArgument
 import com.ziroau.permissionvalidator.api.PermissionManager.requires
 import earth.terrarium.heracles.api.events.HeraclesEvents
 import earth.terrarium.heracles.api.events.TaskEventTarget
@@ -41,10 +39,8 @@ object IolausCommand {
         CommandManager.literal("completetask")
             .requires(IolausPermissions.COMPLETE_TASK)
             .then(CommandManager.argument("player", EntityArgumentType.player())
-                    .then(CommandManager.argument("questid", StringArgumentType.word())
-                            .suggests(QUEST_ID_SUGGESTER)
-                            .then(CommandManager.argument("taskid", StringArgumentType.word())
-                                    .suggests(TASK_ID_SUGGESTER)
+                    .then(IolausArgument.quests("questid")
+                            .then(IolausArgument.tasks("taskid")
                                     .executes { ctx -> completeQuestTask(ctx) }
                             )
                     )
@@ -54,10 +50,8 @@ object IolausCommand {
         CommandManager.literal("claimreward")
             .requires(IolausPermissions.CLAIM_REWARD)
             .then(CommandManager.argument("player", EntityArgumentType.player())
-                    .then(CommandManager.argument("questid", StringArgumentType.word())
-                            .suggests(QUEST_ID_SUGGESTER)
-                            .then(CommandManager.argument("rewardid", StringArgumentType.word())
-                                    .suggests(REWARD_ID_SUGGESTER)
+                    .then(IolausArgument.quests("questid")
+                            .then(IolausArgument.rewards("rewardid")
                                     .executes { ctx -> claimReward(ctx) }
                             )
                     )
@@ -67,8 +61,7 @@ object IolausCommand {
         CommandManager.literal("debug")
             .requires(IolausPermissions.DEBUG)
             .then(CommandManager.argument("player", EntityArgumentType.player())
-                    .then(CommandManager.argument("questid", StringArgumentType.word())
-                            .suggests(QUEST_ID_SUGGESTER)
+                    .then(IolausArgument.quests("questid")
                             .executes { ctx -> debug(ctx) }
                     )
             )

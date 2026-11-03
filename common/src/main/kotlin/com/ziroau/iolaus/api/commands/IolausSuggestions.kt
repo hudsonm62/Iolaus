@@ -1,4 +1,4 @@
-package com.ziroau.iolaus.api.data
+package com.ziroau.iolaus.api.commands
 
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
@@ -25,21 +25,25 @@ object IolausSuggestions {
      *
      * @return An empty suggestion result if the quest ID cannot be resolved.
      */
-    @JvmStatic
-    @JvmOverloads
+    @JvmStatic @JvmOverloads
     fun suggestEntriesForQuest(
         context: CommandContext<ServerCommandSource>,
         builder: SuggestionsBuilder,
         questIdArgumentName: String = "questid",
         entries: (Quest) -> Collection<String>
     ): CompletableFuture<Suggestions> {
+        // Resolve the quest ID from the command context
         val questId = runCatching {
-            StringArgumentType.getString(context, questIdArgumentName)
+            StringArgumentType.getString(
+                context, questIdArgumentName.trim().lowercase()
+            )
         }.getOrNull() ?: return builder.buildFuture()
 
+        // Resolve the quest from the quest ID
         val quest = QuestHandler.get(questId)
             ?: return builder.buildFuture()
 
+        // Now fill out suggestions from the quest
         entries(quest).forEach(builder::suggest)
 
         return builder.buildFuture()
