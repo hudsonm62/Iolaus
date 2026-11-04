@@ -57,7 +57,7 @@ jobs:
       - name: 🏗️ Build Docs
         shell: pwsh
         run: |
-          gradlew :common:dokkaGenerateHtml
+          ./gradlew :common:dokkaGenerateHtml
           zensical build --clean
           Copy-Item -Path (Join-Path $env:GITHUB_WORKSPACE "common/build/dokka/html") `
             -Destination "build/site/api" -Recurse -Force -ErrorAction Stop
