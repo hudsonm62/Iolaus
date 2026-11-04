@@ -36,8 +36,9 @@ replay_pid*
 **/bin
 **/run
 
-!.idea/copyright/**
-.idea/
+.idea/*
+!.idea/copyright/
+!.idea/dictionaries/
 
 .scratch
 *.venv
