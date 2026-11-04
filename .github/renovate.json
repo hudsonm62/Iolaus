@@ -22,6 +22,11 @@
             "description": "Only allow Yarn mappings for Minecraft 1.21.1",
             "matchPackageNames": ["net.fabricmc:yarn"],
             "allowedVersions": "/^1\\.21\\.1\\+build\\.\\d+$/"
+        },
+        {
+            "description": "Enforce older Fabric Loader Release",
+            "matchPackageNames": ["net.fabricmc:fabric-loader"],
+            "allowedVersions": "/^0\\.19\\./"
         }
     ]
 }
