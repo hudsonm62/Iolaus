@@ -52,8 +52,12 @@ jobs:
         run: pip install zensical
 
       - name: 🏗️ Build Docs
-        run: ./build-docs.ps1
         shell: pwsh
+        run: |
+          gradlew :common:dokkaGenerateHtml
+          zensical build --clean
+          Copy-Item -Path (Join-Path $env:GITHUB_WORKSPACE "common/build/dokka/html") `
+            -Destination "build/site/api" -Recurse -Force -ErrorAction Stop
 
       - name: ⏫ Upload Docs Artifact
         uses: actions/upload-artifact@v7
