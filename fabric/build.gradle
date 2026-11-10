@@ -56,7 +56,7 @@ configurations {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:0.116.17+1.21.1"
+    modRuntimeOnly "net.fabricmc.fabric-api:fabric-api:0.116.18+1.21.1"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
