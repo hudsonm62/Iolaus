@@ -27,6 +27,11 @@
             "description": "Enforce older Fabric Loader Release",
             "matchPackageNames": ["net.fabricmc:fabric-loader"],
             "allowedVersions": "/^0\\.19\\./"
+        },
+        {
+            "description": "Only allow v5.x.x Kotlin For Forge",
+            "matchPackageNames": ["thedarkcolour:kotlinforforge-neoforge"],
+            "allowedVersions": "/^5\\./"
         }
     ]
 }
