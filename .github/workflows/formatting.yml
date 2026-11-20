@@ -1,0 +1,24 @@
+name: ✨ Formatting
+on: [push, workflow_dispatch]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⚙️ Checkout code
+        id: checkout
+        uses: actions/checkout@v7
+
+      - name: ✨ Markdownlint CLi2 Action
+        if: steps.checkout.outcome == 'success' && !cancelled()
+        uses: DavidAnson/markdownlint-cli2-action@v25
+        with:
+          globs: "**/*.md"
+          config: .markdownlint-cli2.jsonc
+
+      - name: ✨ Prettier Action
+        if: steps.checkout.outcome == 'success' && !cancelled()
+        uses: creyD/prettier_action@v4.6
+        with:
+          prettier_options: --config .prettierrc --check .
+          dry: true

@@ -2,7 +2,7 @@
     "trailingComma": "none",
     "endOfLine": "lf",
     "useTabs": false,
-    "tabWidth": 2,
+    "tabWidth": 4,
     "overrides": [
         {
             "files": ["*.mcmeta"],
@@ -12,9 +12,9 @@
             }
         },
         {
-            "files": ["*.json", "*.jsonc", ".prettierrc", "*.md"],
+            "files": ["*.yml", "*.yaml"],
             "options": {
-                "tabWidth": 4
+                "tabWidth": 2
             }
         }
     ]

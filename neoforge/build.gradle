@@ -7,36 +7,6 @@ architectury {
     neoForge()
 }
 
-// Test Mod Config
-sourceSets {
-    testmod {
-        compileClasspath += sourceSets.main.compileClasspath
-        runtimeClasspath += sourceSets.main.runtimeClasspath
-    }
-}
-loom {
-    mods {
-        "iolaus" {
-            sourceSet sourceSets.main
-        }
-
-        "iolaus_testmod" {
-            sourceSet sourceSets.testmod
-        }
-    }
-
-    runs {
-        testmodClient {
-            client()
-            sourceSet = sourceSets.testmod.name
-            displayName = "Iolaus TestMod Client"
-            runDirectory = file("run/testmod")
-            generateRunConfig = true
-        }
-    }
-}
-////
-
 configurations {
     common {
         canBeResolved = true
@@ -63,10 +33,6 @@ repositories {
         name = 'Kotlin for Forge'
         url = 'https://thedarkcolour.github.io/KotlinForForge/'
     }
-    maven {
-        name = "MCEF"
-        url = "https://mcef-download.cinemamod.com/repositories/releases"
-    }
 }
 
 dependencies {
@@ -77,17 +43,14 @@ dependencies {
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 
     // Heracles
-    modImplementation ("earth.terrarium.heracles:heracles-neoforge-1.21.1:${heracles_version}"){ transitive = false }
-    modImplementation ("com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21:${resourcefullib_version}")
-    modImplementation ("earth.terrarium.hermes:hermes-neoforge-1.21.1:${hermes_version}"){ transitive = false }
-    modImplementation ("earth.terrarium.olympus:olympus-neoforge-1.21:${olympus_version}")
+    modImplementation("earth.terrarium.heracles:heracles-neoforge-1.21.1:${heracles_version}") { transitive = false }
+    modImplementation("com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21:${resourcefullib_version}")
+    modImplementation("earth.terrarium.hermes:hermes-neoforge-1.21.1:${hermes_version}") { transitive = false }
+    modImplementation("earth.terrarium.olympus:olympus-neoforge-1.21:${olympus_version}")
 
     // PermissionValidator API
     modApi "com.ziroau:permissionvalidator:${permissionvalidator_version}:neoforge-mc1.21.1"
     include "com.ziroau:permissionvalidator:${permissionvalidator_version}:neoforge-mc1.21.1"
-
-    // TestMod can access the Iolaus NeoForge implementation
-    testmodImplementation sourceSets.main.output
 }
 
 processResources {
